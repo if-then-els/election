@@ -1,0 +1,23 @@
+{
+    "name": "election-system",
+    "version": "1.0.0",
+    "description": "An election system for welfare where users can register for voting and login to vote.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongoose": "^6.0.12",
+        "body-parser": "^1.19.0",
+        "jsonwebtoken": "^8.5.1",
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^10.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
+    },
+    "author": "",
+    "license": "ISC"
+}
