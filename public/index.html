@@ -7,7 +7,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+           background-image: url(images/bg.png);
+            background-repeat: no-repeat;
+            background-position: center;
+           background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,19 +18,23 @@
             margin: 0;
         }
         .login-container {
-            background-color: #fff;
+            background-image: url(images/bg.png);
+            backdrop-filter: blur(8px);
+            background-repeat: no-repeat;
+            background-size: 0;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
             width: 300px;
-            text-align: center;
+          
         }
         .login-container h2 {
             margin-bottom: 20px;
+            color: #1f1e1e;
         }
         .login-container input[type="text"],
         .login-container input[type="password"] {
-            width: 100%;
+            width: 94%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
@@ -42,6 +49,7 @@
             color: #fff;
             font-size: 16px;
             cursor: pointer;
+            margin-left: 2px;
         }
         .login-container button:hover {
             background-color: #218838;
@@ -57,7 +65,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Sign in</h2>
         <form>
             <input type="text" placeholder="Username" required>
             <input type="password" placeholder="Password" required>
