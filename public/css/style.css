@@ -49,4 +49,23 @@
         .signup-container button:hover {
             background-color: #218838;
         }
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            padding-right: 40px; 
+             
+        }
+
+        .input-container i {
+            position: absolute;
+            right: 20px;
+            cursor: pointer;
+            color: #1f1e1e;
+        }
     
