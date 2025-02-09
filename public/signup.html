@@ -10,14 +10,15 @@
 </head>
 <body>
     <div class="signup-container">
-        <h2>Sign Up</h2>
-        <form> 
-            <input type="text" placeholder="Username" required>
-            <input type="email" placeholder="Email" required>
-            <div class="input-container">
-                <input type="password" id="password" placeholder="Password" required>
-                <i class="fa-solid fa-eye" id="togglePassword"></i>
-            </div>
+        <h2>Rigister As a Voter</h2>
+        <form action="/register" method="POST"> 
+            <input type="text" name="name" placeholder="Full Staff Name" required>
+            
+            <input type="email" name="email" placeholder="Email" required>
+            
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <!-- <i class="fa-solid fa-eye" id="togglePassword"></i> -->
+            
             <button type="submit">Sign Up</button>
             Have an Account? <a href="index.html">Sign in</a>
         </form>

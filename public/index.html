@@ -19,6 +19,8 @@
             margin: 0;
         }
         .login-container {
+            display: flex;
+            flex-direction: column;
             background-image: url(images/bg.png);
             backdrop-filter: blur(8px);
             background-repeat: no-repeat;
@@ -31,10 +33,12 @@
         }
         .login-container h2 {
             margin-bottom: 20px;
-            color: #1f1e1e;
+            color: #f8f3f3;
         }
         .login-container input[type="text"],
-        .login-container input[type="password"] {
+        .login-container input[type="password"]
+        input[type="email"]
+        {
             width: 94%;
             padding: 10px;
             margin: 10px 0;
@@ -86,16 +90,18 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Sign in</h2>
-        <form>
-            <input type="text" placeholder="Username" required>
+        <h2>Vote for Your Leader</h2>
+        <form action="/login" method="POST">
+            <input type="text" placeholder="Full Staff's Name" required>
+           
             <div class="input-container">
-                <input type="password" id="password" placeholder="Password" required>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
                 <i class="fa-solid fa-eye" id="togglePassword"></i>
             </div>
             <button type="submit">Login</button>
         </form>
-        <button class="register-button">Voter Registration</button>
+      <a href="signup.html">  <button class="register-button">Voter Registration</button></a>
     </div>
 </body>
 <script src="../toggle_password.js"></script>
