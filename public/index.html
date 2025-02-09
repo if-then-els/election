@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+           background-image: url(images/bg.png);
+            background-repeat: no-repeat;
+            background-position: center;
+           background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,19 +19,23 @@
             margin: 0;
         }
         .login-container {
-            background-color: #fff;
+            background-image: url(images/bg.png);
+            backdrop-filter: blur(8px);
+            background-repeat: no-repeat;
+            background-size: 0;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
             width: 300px;
-            text-align: center;
+          
         }
         .login-container h2 {
             margin-bottom: 20px;
+            color: #1f1e1e;
         }
         .login-container input[type="text"],
         .login-container input[type="password"] {
-            width: 100%;
+            width: 94%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
@@ -42,6 +50,7 @@
             color: #fff;
             font-size: 16px;
             cursor: pointer;
+            margin-left: 2px;
         }
         .login-container button:hover {
             background-color: #218838;
@@ -53,17 +62,41 @@
         .register-button:hover {
             background-color: #0056b3;
         }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            padding-right: 40px; 
+             
+        }
+
+        .input-container i {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            color: #1f1e1e;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Sign in</h2>
         <form>
             <input type="text" placeholder="Username" required>
-            <input type="password" placeholder="Password" required>
+            <div class="input-container">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fa-solid fa-eye" id="togglePassword"></i>
+            </div>
             <button type="submit">Login</button>
         </form>
         <button class="register-button">Voter Registration</button>
     </div>
 </body>
+<script src="../toggle_password.js"></script>
 </html>
