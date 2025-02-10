@@ -32,7 +32,12 @@ exports.vote = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     if (user.hasVoted) {
-      return res.status(400).json({ message: "User has already voted" });
+      return res
+        .status(400)
+        .json({
+          message:
+            "We Mzee unataka kuiba kura, Kasongo wewe 😂😂😂😂 you've voted already",
+        });
     }
 
     // Update user's voting status

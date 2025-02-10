@@ -1,10 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- External CSS and Tailwind -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,69 +16,48 @@
     </h1>
    
     <form id="voteForm" action="/vote" method="POST" class="bg-white p-6 rounded-lg shadow-lg">
-      <h3><div id="welcomeMessage" class="text-center mb-8"></div></h3>
+      <h3>
+        <div id="welcomeMessage" class="text-center mb-8"></div>
+      </h3>
+      
+      <!-- Chairperson Section -->
       <div class="mb-6">
         <h2 class="text-2xl font-semibold mb-4">
           Chairperson
         </h2>
         <div class="flex items-center mb-2">
-          <input class="mr-2" id="president1" name="candidateId" type="radio" value="67a9059dba2a1bf62aebd3c8" required/>
-          <label class="flex items-center" for="president1">
-            <img alt="Image of Candidate 1 for President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/NL0CORfKYrzDuidbR132WQSysntbx_9B63xmmEY2CWY.jpg" width="50"/>
-            <span>
-              Daniel Lab
-            </span>
+          <input class="mr-2" id="president4" name="chairCandidateId" type="radio" value="67a9adbe2c8cea1bbf2b6806"/>
+          <label class="flex items-center" for="president4">
+            <img alt="Image of Candidate 4 for President" class="w-10 h-10 rounded-full mr-2" height="50" src="photos/WhatsApp Image 2025-02-10 at 10.44.51_dccd7d2c.jpg" width="50" />
+            <span>Daniel Mwaura</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input class="mr-2" id="president2" name="candidateId" type="radio" value="67a9063fba2a1bf62aebd3ca"/>
-          <label class="flex items-center" for="president2">
-            <img alt="Image of Candidate 2 for President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/ATgK-jH9unVI--E_qWkM9F0WpTvyPP3L-MsY8Hy077U.jpg" width="50"/>
-            <span>
-              Gorge Njiru 
-            </span>
-          </label>
-        </div>
-        <div class="flex items-center mb-2">
-          <input class="mr-2" id="president3" name="candidateId" type="radio" value="candidate3"/>
-          <label class="flex items-center" for="president3">
-            <img alt="Image of Candidate 3 for President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/yfjn5Smkv6DM0EmmIl2d6ucN5Vimt5cYq7CLpJrU_x4.jpg" width="50"/>
-            <span>
-              Candidate 3
-            </span>
+          <input class="mr-2" id="president5" name="chairCandidateId" type="radio" value="67a9adca2c8cea1bbf2b6808"/>
+          <label class="flex items-center" for="president5">
+            <img alt="Image of Candidate 5 for President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/ATgK-jH9unVI--E_qWkM9F0WpTvyPP3L-MsY8Hy077U.jpg" width="50" />
+            <span>Gorge Ireri</span>
           </label>
         </div>
       </div>
 
+      <!-- Vice Chairperson Section -->
       <div class="mb-6">
         <h2 class="text-2xl font-semibold mb-4">
           Vice Chairperson
         </h2>
         <div class="flex items-center mb-2">
-          <input class="mr-2" id="vicePresident1" name="viceCandidateId" type="radio" value="viceCandidate1" required/>
-          <label class="flex items-center" for="vicePresident1">
-            <img alt="Image of Candidate 1 for Vice President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/NL0CORfKYrzDuidbR132WQSysntbx_9B63xmmEY2CWY.jpg" width="50"/>
-            <span>
-              Vice Candidate 1
-            </span>
+          <input class="mr-2" id="vicePresident4" name="viceCandidateId" type="radio" value="67a9adde2c8cea1bbf2b680a" />
+          <label class="flex items-center" for="vicePresident4">
+            <img alt="Image of Candidate 4 for Vice President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/NL0CORfKYrzDuidbR132WQSysntbx_9B63xmmEY2CWY.jpg" width="50" />
+            <span>Peter Nyaga Njiru</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input class="mr-2" id="vicePresident2" name="viceCandidateId" type="radio" value="viceCandidate2"/>
-          <label class="flex items-center" for="vicePresident2">
-            <img alt="Image of Candidate 2 for Vice President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/ATgK-jH9unVI--E_qWkM9F0WpTvyPP3L-MsY8Hy077U.jpg" width="50"/>
-            <span>
-              Vice Candidate 2
-            </span>
-          </label>
-        </div>
-        <div class="flex items-center mb-2">
-          <input class="mr-2" id="vicePresident3" name="viceCandidateId" type="radio" value="viceCandidate3"/>
-          <label class="flex items-center" for="vicePresident3">
-            <img alt="Image of Candidate 3 for Vice President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/yfjn5Smkv6DM0EmmIl2d6ucN5Vimt5cYq7CLpJrU_x4.jpg" width="50"/>
-            <span>
-              Vice Candidate 3
-            </span>
+          <input class="mr-2" id="vicePresident5" name="viceCandidateId" type="radio" value="67a9adea2c8cea1bbf2b680c" />
+          <label class="flex items-center" for="vicePresident5">
+            <img alt="Image of Candidate 5 for Vice President" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/ATgK-jH9unVI--E_qWkM9F0WpTvyPP3L-MsY8Hy077U.jpg" width="50" />
+            <span>Jesse Brian</span>
           </label>
         </div>
       </div>
@@ -90,8 +68,11 @@
           Submit Vote
         </button>
       </div>
+      <h3>
+        By Codecine Creations (Reach Out to Our Developer Ritchie Brian 0114088623 or visit
+        <a href="codecinecreations.co.ke">codecinecreations.co.ke</a>)
+      </h3>
     </form>
-    <h3>By Codecine Creations(Ritchie Brian 0114088623 <a href="codecinecreations.co.ke"> codecinecreations.co.ke)</a></h3>
   </div>
   <div class="toaster" id="toaster"></div>
 
@@ -127,7 +108,7 @@
       .then(response => response.json())
       .then(data => {
         const welcomeMessage = document.getElementById('welcomeMessage');
-        welcomeMessage.innerHTML = `Welcome, ${data.name},  Make a wise decision to make CHK great Again `;
+        welcomeMessage.innerHTML = `Welcome, ${data.name}, Make a wise decision to make CHK great Again`;
         document.getElementById('userId').value = data.userId;
       })
       .catch(error => console.error('Error fetching user info:', error));

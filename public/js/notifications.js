@@ -16,5 +16,5 @@ function showToast(message, type) {
     setTimeout(() => {
       toaster.removeChild(toast);
     }, 300);
-  }, 3000);
+  }, 8000);
 }
