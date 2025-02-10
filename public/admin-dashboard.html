@@ -30,6 +30,7 @@
                         <table class="min-w-full bg-white">
                             <thead>
                                 <tr>
+                                    <th class="py-2 px-4 border-b">#</th>
                                     <th class="py-2 px-4 border-b">Name</th>
                                     <th class="py-2 px-4 border-b">Email</th>
                                 </tr>
@@ -80,9 +81,12 @@
                 votersList.innerHTML = '';
                 votesList.innerHTML = '';
 
-                data.voters.forEach(voter => {
+                data.voters.forEach((voter, index) => {
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `<td class="py-2 px-4 border-b">${voter.name}</td><td class="py-2 px-4 border-b">${voter.email}</td>`;
+                    tr.innerHTML = `<td class="py-2 px-4 border-b">${index + 1}</td>
+                                    <td class="py-2 px-4 border-b">${voter.name}</td>
+                                    <td class="py-2 px-4 border-b">${voter.email}</td>
+                                    <td class="py-2 px-4 border-b">${voter._id}</td>`;
                     votersList.appendChild(tr);
                 });
 
