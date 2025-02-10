@@ -1,5 +1,4 @@
-
-        body {
+body {
             font-family: Arial, sans-serif;
             background-image: url(../images/bg.png);
             background-position: center;
@@ -68,4 +67,38 @@
             cursor: pointer;
             color: #1f1e1e;
         }
-    
+
+/* Toaster notifications */
+.toaster {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toaster .toast {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.toaster .toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-success {
+  background-color: #28a745;
+}
+
+.toast-error {
+  background-color: #dc3545;
+}

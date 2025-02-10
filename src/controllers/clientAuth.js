@@ -17,16 +17,13 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    // Since passwords are in plain text, a direct comparison works:
     const isMatch = password === user.password;
-    console.log(password, " and ", user.password);
-    console.log(isMatch);
-
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    return res.redirect("/home.html");
+    req.session.userId = user._id;
+    res.redirect("/home.html");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -36,10 +33,6 @@ exports.login = async (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { name, password, email } = req.body;
-
-    // Hash the password before saving
-    // const saltRounds = 10;
-    // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newUser = new User({ name, password, email });
     await newUser.save();

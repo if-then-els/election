@@ -23,6 +23,33 @@
             Have an Account? <a href="index.html">Sign in</a>
         </form>
     </div>
+    <div class="toaster" id="toaster"></div>
 </body>
 <script src="../toggle_password.js"></script>
+<script>
+  document.querySelector('form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        showToast(result.message, 'success');
+      } else {
+        showToast(result.message, 'error');
+      }
+    } catch (error) {
+      showToast('An error occurred', 'error');
+    }
+  });
+</script>
 </html>

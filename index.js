@@ -58,6 +58,11 @@ app.use(express.static(path.join(__dirname, "public")));
 const userAuth = require("./src/routes/userAuth");
 app.use("/", userAuth);
 
+// Serve the add-candidate.html page
+app.get("/add-candidate", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "add-candidate.html"));
+});
+
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
