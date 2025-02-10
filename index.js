@@ -1,6 +1,4 @@
 const express = require("express");
-const router = express.Router();
-// const bcrypt = require("bcrypt");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
@@ -20,8 +18,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://Admin_Richie:5578brianLavenda@codecine.elz7u.mongodb.net/election?retryWrites=true&w=majority&appName=election",
+      mongoUrl: process.env.mongoconnect,
     }),
     cookie: {
       secure: process.env.NODE_ENV === "production", // Secure cookies in production
@@ -34,13 +31,10 @@ app.use(
 
 //db mongoose connect
 mongoose
-  .connect(
-    "mongodb+srv://Admin_Richie:5578brianLavenda@codecine.elz7u.mongodb.net/election?retryWrites=true&w=majority&appName=election",
-    {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.mongoconnect, {
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+  })
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Database connection error:", err));
 
@@ -59,7 +53,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //routes
 const userAuth = require("./src/routes/userAuth");
+const adminRoutes = require("./src/routes/adminRoutes");
 app.use("/", userAuth);
+app.use("/admin", adminRoutes);
 
 // Serve the add-candidate.html page
 app.get("/add-candidate", (req, res) => {
