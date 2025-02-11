@@ -16,10 +16,11 @@ exports.vote = async (req, res) => {
         .json({ message: "Unauthorized: user not logged in" });
     }
 
-    const { candidateId } = req.body;
+    const { candidateId, viceCandidateId } = req.body;
     const userId = req.session.userId;
     console.log("User ID from session:", userId);
     console.log("Candidate ID from request:", candidateId);
+    console.log("Vice Candidate ID from request:", viceCandidateId);
 
     // Validate that userId is a valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -32,25 +33,31 @@ exports.vote = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     if (user.hasVoted) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "We Mzee unataka kuiba kura, Kasongo wewe 😂😂😂😂 you've voted already",
-        });
+      return res.status(400).json({
+        message:
+          "We Mzee unataka kuiba kura, Kasongo wewe 😂😂😂😂 you've voted already",
+      });
     }
 
     // Update user's voting status
     user.hasVoted = true;
     await user.save();
 
-    // Update candidate's vote count
+    // Update chairperson candidate's vote count
     const candidate = await Candidate.findById(candidateId);
     if (!candidate) {
       return res.status(404).json({ message: "Candidate not found" });
     }
     candidate.votes += 1;
     await candidate.save();
+
+    // Update vice chairperson candidate's vote count
+    const viceCandidate = await Candidate.findById(viceCandidateId);
+    if (!viceCandidate) {
+      return res.status(404).json({ message: "Vice Candidate not found" });
+    }
+    viceCandidate.votes += 1;
+    await viceCandidate.save();
 
     res.status(200).json({ message: "Vote submitted successfully" });
   } catch (error) {
