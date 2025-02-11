@@ -1,0 +1,1008 @@
+[{
+  "_id": {
+    "$oid": "67a9f4f9d23ee4cc0c6b1a91"
+  },
+  "name": "James Mwaniki",
+  "email": "jamesmwaniki310@gmail.com",
+  "password": "33236656",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T12:45:45.635Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T12:45:45.635Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f51dd23ee4cc0c6b1a96"
+  },
+  "name": "Mercy kathoni mutegi ",
+  "email": "mercymutegi88@gmail.com",
+  "password": "29671390",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T12:46:21.013Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T12:46:21.013Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f65dd23ee4cc0c6b1a99"
+  },
+  "name": "Daniel Mwaura ",
+  "email": "mwauradanielngumi@gmail.com",
+  "password": "chairman",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T12:51:41.470Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T12:51:41.470Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f859d23ee4cc0c6b1a9c"
+  },
+  "name": "Njeru flavius everlyn karimi",
+  "email": "karimieverlyn8@gmail.com",
+  "password": "Everlyn",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:00:09.615Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:00:09.615Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f94bd23ee4cc0c6b1a9f"
+  },
+  "name": "Wincate wanja",
+  "email": "wincatenjue@gmail.com",
+  "password": "fundi2022",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:04:11.958Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:04:11.958Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f955d23ee4cc0c6b1aa3"
+  },
+  "name": "Muchikuri rose",
+  "email": "muchikurirose@gmail.com",
+  "password": "2007",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:04:21.180Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:04:21.180Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f955d23ee4cc0c6b1aa5"
+  },
+  "name": "Hellen Macoyoko ",
+  "email": "hellenmosoba1978@gmail.com",
+  "password": "lenahmoro2369",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:04:21.364Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:04:21.364Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f973d23ee4cc0c6b1aaa"
+  },
+  "name": "Kellvin Gitonga ",
+  "email": "kellvingitonga@gmail.com",
+  "password": "33422753",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:04:51.849Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:04:51.849Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f991d23ee4cc0c6b1aae"
+  },
+  "name": "Pauline Wanjiru Njamwitha ",
+  "email": "njamwithapauline17@gmail.com",
+  "password": "yvonnengatha",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:05:21.705Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:05:21.705Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9f9abd23ee4cc0c6b1ab2"
+  },
+  "name": "MaryAnn wanjuki ngari",
+  "email": "maryannngari32@gmail.com",
+  "password": "Ryan",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:05:47.832Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:05:47.832Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fa12d23ee4cc0c6b1ab6"
+  },
+  "name": "Risper Kaimuri Murerwa ",
+  "email": "risperkaimuri2020@gmail.com",
+  "password": "1234",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:07:30.935Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:07:30.935Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9faded23ee4cc0c6b1abd"
+  },
+  "name": "Erick Wafula",
+  "email": "erickw96@gmail.com",
+  "password": "123456",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:10:54.354Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:10:54.354Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fb39d23ee4cc0c6b1ac1"
+  },
+  "name": "Chepkemoi daizy",
+  "email": "memodaizy@gmail.com",
+  "password": "0720511925",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:12:25.670Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:12:25.670Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fb41d23ee4cc0c6b1ac4"
+  },
+  "name": "Millicent Mukiri ",
+  "email": "millymukiri14@gmail.com",
+  "password": "swanjiru@2014",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:12:33.631Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:12:33.631Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fbc2d23ee4cc0c6b1ac8"
+  },
+  "name": "Winfred Mutindi Mbwii ",
+  "email": "mbwiimutindi@gmail.com",
+  "password": "0728327086",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:14:42.379Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:14:42.379Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fbc4d23ee4cc0c6b1acb"
+  },
+  "name": "John kihiu ng'ang'a",
+  "email": "johnnganga720@gmail.com",
+  "password": "0000",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:14:44.210Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:14:44.210Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fc4ad23ee4cc0c6b1ad1"
+  },
+  "name": "Kennedy Gitonga ",
+  "email": "gitongak152@gmail.com",
+  "password": "Kenn@2000",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:16:58.591Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:16:58.591Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fc51d23ee4cc0c6b1ad4"
+  },
+  "name": "Jesse Brian Mwihungi ",
+  "email": "jessebrian803@gmail.com",
+  "password": "samki",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:17:05.935Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:17:05.935Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fce5d23ee4cc0c6b1ad8"
+  },
+  "name": "Elvis Achiya",
+  "email": "elvisachiya@gmail.com",
+  "password": "33580469",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:19:33.355Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:19:33.355Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fe04d23ee4cc0c6b1ade"
+  },
+  "name": "Purity murugi ",
+  "email": "puritymurugi2019@gmail.com",
+  "password": "puritymurugi",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:24:20.573Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:24:20.573Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9fed6d23ee4cc0c6b1ae2"
+  },
+  "name": "julius muturi",
+  "email": "oscarjuliusmuturi@gmail.com",
+  "password": "1234",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:27:50.776Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:27:50.776Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9ff09d23ee4cc0c6b1ae5"
+  },
+  "name": "BONIFACE NDWIGA",
+  "email": "bonkushndwiga8@gmail.com",
+  "password": "B1995",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:28:41.583Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:28:41.583Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9ff3cd23ee4cc0c6b1ae8"
+  },
+  "name": "NELSON MUTWIRI GACIURU ",
+  "email": "nelsonmutwiri03@gmail.com",
+  "password": "Nelson7171",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:29:32.551Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:29:32.551Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9ff43d23ee4cc0c6b1aec"
+  },
+  "name": "Maurice Njiru mugo",
+  "email": "Mauricenjirumugo@gmail.com",
+  "password": "Mn07125267",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:29:39.137Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:29:39.137Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a9ff4cd23ee4cc0c6b1af0"
+  },
+  "name": "James wachira njeru",
+  "email": "jameswachira799@gmail.com",
+  "password": "Wachira94.",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:29:48.845Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:29:48.845Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa00cad23ee4cc0c6b1af8"
+  },
+  "name": "SAMUEL NGUGI",
+  "email": "nguginduati77@gmail.com",
+  "password": "000000",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:36:10.807Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:36:10.807Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa01e5d23ee4cc0c6b1afb"
+  },
+  "name": "Lucy makena",
+  "email": "lucymakena144@gmail.com",
+  "password": "35313949ml",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:40:53.048Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:40:53.048Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa0205d23ee4cc0c6b1aff"
+  },
+  "name": "Brenda wawira",
+  "email": "brendawesh.50@gmail.com",
+  "password": "Voting2025",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:41:25.076Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:41:25.076Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa0369d23ee4cc0c6b1b03"
+  },
+  "name": "James Muchangi Nyaga",
+  "email": "jimonyaga@gmail.com",
+  "password": "28842633",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:47:21.702Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:47:21.702Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa044cd23ee4cc0c6b1b08"
+  },
+  "name": "Evangeline muriuki",
+  "email": "wandirimuriuki@gmail.com",
+  "password": "5522M",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:51:08.698Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:51:08.698Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa04c9d23ee4cc0c6b1b0c"
+  },
+  "name": "Patrick Gitonga Nyaga",
+  "email": "patrickgitonga712@gmail.com",
+  "password": "7668",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T13:53:13.062Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T13:53:13.062Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa08b2d23ee4cc0c6b1b0f"
+  },
+  "name": "Lucy mumbi mwara",
+  "email": "lucy0725572966@gmail.com",
+  "password": "Fortune",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T14:09:54.314Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T14:09:54.314Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa11d8ad53dcb02afcdff8"
+  },
+  "name": "Anne Mueni Nyaga",
+  "email": "nyagaanne23@yahoo.com",
+  "password": "Emmanuel@96",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T14:48:56.631Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T14:48:56.631Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa1839a7354766c498ad19"
+  },
+  "name": "Edward Kamenju Mwangi",
+  "email": "edwardkamenju2@gmail.com",
+  "password": "36971749",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T15:16:09.102Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T15:16:09.102Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa1b41a7354766c498ad1d"
+  },
+  "name": "Ianevans munene Muriithi ",
+  "email": "ianmunene593@gmail.com",
+  "password": "1998",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T15:29:05.081Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T15:29:05.081Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa1bcfa7354766c498ad21"
+  },
+  "name": "Nazaria Mutitu Njeru",
+  "email": "nazarianjeru@yahoo.com",
+  "password": "misanya",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T15:31:27.850Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T15:31:27.850Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa2075a7354766c498ae03"
+  },
+  "name": "Fred Minja",
+  "email": "minjafred@gmail.com",
+  "password": "kokoliko",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T15:51:17.653Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T15:51:17.653Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa218fa7354766c498ae1e"
+  },
+  "name": "George Njiru Ireri",
+  "email": "georgenjiru@gmail.com",
+  "password": "Inspectagka12",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T15:55:59.840Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T15:55:59.840Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa2229a7354766c498ae35"
+  },
+  "name": "Fridah ",
+  "email": "fridahntinyari699@gmail.com",
+  "password": "@ashley2022",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T15:58:33.319Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T15:58:33.319Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa262ba7354766c498aeac"
+  },
+  "name": "Edna Rotich ",
+  "email": "ednarotich3@gmail.com",
+  "password": "1w345",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T16:15:39.420Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T16:15:39.420Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa2bdb2eca25e0a740ed60"
+  },
+  "name": "Brian Munene Njagi",
+  "email": "njagibrianmunene@gmail.com",
+  "password": "0000",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T16:39:55.064Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T16:39:55.064Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa334768f047409fb2570f"
+  },
+  "name": "Sabina Wambui",
+  "email": "sabinahwanjira@gmail.com",
+  "password": "sabina1991",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T17:11:35.081Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T17:11:35.081Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa440fd5cf3430839f72c2"
+  },
+  "name": "Rose mugo",
+  "email": "rosemugo1963@gmail.com",
+  "password": "2025",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T18:23:11.488Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T18:23:11.488Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa44b4d5cf3430839f72c6"
+  },
+  "name": "Beatrice Namu ",
+  "email": "namubeatric@gmail.com",
+  "password": "0712711178@1n",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T18:25:56.780Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T18:25:56.780Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa53d8c30d0bbaae3fe1a0"
+  },
+  "name": "Sheilla Langat ",
+  "email": "sheilakiplagat@gmail.com",
+  "password": "Britam@2019",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T19:30:32.563Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T19:30:32.563Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aa6bc21848805a78109f80"
+  },
+  "name": "John musyimi ",
+  "email": "johnmusyimi226@gmail.com",
+  "password": "Musyi123.",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-10T21:12:34.454Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T21:12:34.454Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae1d48f1bd80c1b5543ad"
+  },
+  "name": "Carol Mueni",
+  "email": "karolinamsafi@gmail.com",
+  "password": "33428595",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:36:20.498Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:36:20.498Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae3df8f1bd80c1b5543b1"
+  },
+  "name": "Sylvia Mwaniki",
+  "email": "sylviamwaniki16@gmail.com",
+  "password": "mwaniki2017",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:45:03.956Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:45:03.956Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae4858f1bd80c1b5543b4"
+  },
+  "name": "Joseph mwangi ",
+  "email": "josephmwangi845@gmail.com",
+  "password": "0715483632",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:47:49.075Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:47:49.075Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae4e98f1bd80c1b5543b8"
+  },
+  "name": "Susan muthoni nyaga",
+  "email": "susannyaga12@gmail.com",
+  "password": "24681012",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:49:29.048Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:49:29.048Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae65c8f1bd80c1b5543bb"
+  },
+  "name": "Linus Muthomi ",
+  "email": "linusmuthomi6838@gmail.com",
+  "password": "linus5500",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:55:40.360Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:55:40.360Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae6da8f1bd80c1b5543be"
+  },
+  "name": "Lilian kawira ",
+  "email": "kawira30@gmail.com",
+  "password": "12345",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:57:46.274Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:57:46.274Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae6f18f1bd80c1b5543c1"
+  },
+  "name": "Faith Muthoni",
+  "email": "muthonifaithtesh@gmail.com",
+  "password": "1234",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T05:58:09.115Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T05:58:09.115Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae77c8f1bd80c1b5543c5"
+  },
+  "name": "Silvia wWawira Njiru",
+  "email": "njirusilvia@gmail.com",
+  "password": "kerugoya",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:00:28.186Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:00:28.186Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae88d8f1bd80c1b55440a"
+  },
+  "name": "Jackline Mukami",
+  "email": "jacklinem274@gmail.com",
+  "password": "33446260",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:05:01.900Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:05:01.900Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae9b18f1bd80c1b55441c"
+  },
+  "name": "Makori simeon ",
+  "email": "Simeonmakori1@gmail.com",
+  "password": "1992",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:09:53.344Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:09:53.344Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aae9eb8f1bd80c1b554427"
+  },
+  "name": "Lucy wambui nyaga",
+  "email": "lucywambuinyaga@gmail.com",
+  "password": "0729485738",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:10:51.121Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:10:51.121Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aaea388f1bd80c1b55442a"
+  },
+  "name": "Mary Wangari Muriithi ",
+  "email": "mwangari@189.gmail.com",
+  "password": "2023",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:12:08.435Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:12:08.435Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aaeabb8f1bd80c1b554450"
+  },
+  "name": "Ann Wawira Njeri",
+  "email": "awawira928@gmail.com",
+  "password": "0724876061",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:14:19.123Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:14:19.123Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aaece48f1bd80c1b554472"
+  },
+  "name": "THOMAS  NJERU",
+  "email": "thomaskariukinjeru@gmail.com",
+  "password": "thomaskariuki",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:23:32.191Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:23:32.191Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aaee2b8f1bd80c1b554476"
+  },
+  "name": "TABITHA WAMBUI",
+  "email": "wambuiktabitha@gmail.com",
+  "password": "tabby6404",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:28:59.815Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:28:59.815Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aaf4e28f1bd80c1b554479"
+  },
+  "name": "Sr Gilda Jancy",
+  "email": "gildainbright@gmail.com",
+  "password": "7909298329",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T06:57:38.190Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T06:57:38.190Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67aafab15320aa4664745d93"
+  },
+  "name": "Evalyne Nyawira Muthike ",
+  "email": "evalynenyawira830@gmail.com",
+  "password": "enm",
+  "hasVoted": false,
+  "createdAt": {
+    "$date": "2025-02-11T07:22:25.245Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-11T07:22:25.245Z"
+  },
+  "__v": 0
+}]

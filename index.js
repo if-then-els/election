@@ -31,10 +31,7 @@ app.use(
 
 //db mongoose connect
 mongoose
-  .connect(process.env.mongoconnect, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-  })
+  .connect(process.env.mongoconnect, {})
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Database connection error:", err));
 
