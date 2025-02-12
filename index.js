@@ -11,6 +11,12 @@ const app = express();
 // Load environment variables from .env file
 dotenv.config();
 
+// Check if required environment variables are set
+if (!process.env.SESSION_SECRET || !process.env.mongoConnect) {
+  console.error("Missing required environment variables.");
+  process.exit(1);
+}
+
 //session
 app.use(
   session({
@@ -18,7 +24,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: "mongodb+srv://Admin_Richie:5578brianLavenda@codecine.elz7u.mongodb.net/election?retryWrites=true&w=majority&appName=election",
+      mongoUrl: process.env.mongoConnect,
     }),
     cookie: {
       secure: process.env.NODE_ENV === "production", // Secure cookies in production
@@ -31,7 +37,7 @@ app.use(
 
 //db mongoose connect
 mongoose
-  .connect("mongodb+srv://Admin_Richie:5578brianLavenda@codecine.elz7u.mongodb.net/election?retryWrites=true&w=majority&appName=election", {})
+  .connect(process.env.mongoConnect, {})
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Database connection error:", err));
 
