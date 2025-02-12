@@ -18,7 +18,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: process.env.mongoconnect,
+      mongoUrl: "mongodb+srv://Admin_Richie:5578brianLavenda@codecine.elz7u.mongodb.net/election?retryWrites=true&w=majority&appName=election",
     }),
     cookie: {
       secure: process.env.NODE_ENV === "production", // Secure cookies in production
@@ -31,7 +31,7 @@ app.use(
 
 //db mongoose connect
 mongoose
-  .connect(process.env.mongoconnect, {})
+  .connect("mongodb+srv://Admin_Richie:5578brianLavenda@codecine.elz7u.mongodb.net/election?retryWrites=true&w=majority&appName=election", {})
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Database connection error:", err));
 
