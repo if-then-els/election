@@ -11,6 +11,10 @@ const app = express();
 // Load environment variables from .env file
 dotenv.config();
 
+// Log environment variables for debugging (remove this in production)
+console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
+console.log("mongoConnect:", process.env.mongoConnect);
+
 // Check if required environment variables are set
 if (!process.env.SESSION_SECRET || !process.env.mongoConnect) {
   console.error("Missing required environment variables.");
