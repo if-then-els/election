@@ -33,7 +33,7 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production", // Secure cookies in production
       httpOnly: true,
-      sameSite: "strict", // Mitigate CSRF attacks
+      sameSite: "none", // Mitigate CSRF attacks
       maxAge: 1000 * 60 * 60,
     },
   })
@@ -51,8 +51,10 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3001", // Set to your frontend URL
-    credentials: true,
+    origin: process.env.CLIENT_URL || "http://localhost:3001",
+    credentials: true, // Allow cookies/session
+    methods: ["GET", "POST", "PUT", "DELETE"], // Ensure all HTTP methods are allowed
+    allowedHeaders: ["Content-Type", "Authorization"], // Ensure correct headers
   })
 );
 app.use(bodyParser.json());
