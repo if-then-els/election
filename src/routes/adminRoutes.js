@@ -5,14 +5,16 @@ const {
   deleteVoter,
   getRealTimeData,
 } = require("../controllers/adminController");
-const { addCandidate } = require("../controllers/candidateController");
+const { addCandidate, getResults } = require("../controllers/candidateController");
+const { requireAdminSession } = require("../../middleware/adminAuth");
 const Candidate = require("../models/candidates");
 const router = express.Router();
 
-router.get("/votes", voteCount);
-router.get("/voters", registeredVoters);
-router.delete("/voter", deleteVoter);
-router.get("/realtime-data", getRealTimeData);
+router.get("/votes", requireAdminSession, voteCount);
+router.get("/voters", requireAdminSession, registeredVoters);
+router.delete("/voter", requireAdminSession, deleteVoter);
+router.get("/realtime-data", requireAdminSession, getRealTimeData);
+router.get("/results", requireAdminSession, getResults); // Admin results endpoint
 
 // Candidate management routes
 router.post("/candidates", addCandidate);

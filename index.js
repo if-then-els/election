@@ -6,6 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 const MongoStore = require("connect-mongo");
+const User = require("./src/models/users");
 const app = express();
 
 // Load environment variables from .env file
@@ -27,14 +28,14 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET, // Use env variable
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // Changed from true to false
     store: MongoStore.create({
       mongoUrl: process.env.localconnect,
     }),
     cookie: {
       secure: process.env.NODE_ENV === "production", // Secure cookies in production
       httpOnly: true,
-      sameSite: "none", // Mitigate CSRF attacks
+      sameSite: "lax", // Changed from "none" to "lax" for better compatibility
       maxAge: 1000 * 60 * 60,
     },
   })
@@ -64,12 +65,60 @@ app.use(express.static(path.join(__dirname, "public")));
 //routes
 const userAuth = require("./src/routes/userAuth");
 const adminRoutes = require("./src/routes/adminRoutes");
+const adminAuth = require("./src/routes/adminAuth");
+
 app.use("/", userAuth);
 app.use("/admin", adminRoutes);
+app.use("/admin", adminAuth);
 
 // Serve the add-candidate.html page
 app.get("/add-candidate", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "add-candidate.html"));
+});
+
+// Serve the admin login page
+app.get("/admin-login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "admin-login.html"));
+});
+
+// Debug route to check session
+app.get("/session-debug", (req, res) => {
+  res.json({
+    session: req.session,
+    sessionId: req.sessionID,
+    cookies: req.headers.cookie
+  });
+});
+
+// Protect admin dashboard - check if user is logged in as admin
+app.get("/admin-dashboard", async (req, res) => {
+  try {
+    console.log('Dashboard access attempt - Session:', {
+      userId: req.session.userId,
+      isAdmin: req.session.isAdmin,
+      sessionId: req.sessionID
+    });
+    
+    if (!req.session.userId) {
+      console.log('No session userId, redirecting to login');
+      return res.redirect("/admin-login");
+    }
+    
+    // Check if user is admin
+    const user = await User.findById(req.session.userId);
+    console.log('User found:', user ? { id: user._id, role: user.role } : 'null');
+    
+    if (!user || user.role !== 'admin') {
+      console.log('User not found or not admin, redirecting to login');
+      return res.redirect("/admin-login");
+    }
+    
+    console.log('Admin verified, serving dashboard');
+    res.sendFile(path.join(__dirname, "public", "admin-dashboard.html"));
+  } catch (err) {
+    console.error('Error checking admin status:', err);
+    res.redirect("/admin-login");
+  }
 });
 
 app.listen(3000, () => {

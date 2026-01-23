@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
     password: { type: String, required: true },
     hasVoted: { type: Boolean, default: false },
+    role: { type: String, enum: ['voter', 'admin'], default: 'voter' },
   },
   { timestamps: true }
 );

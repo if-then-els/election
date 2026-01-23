@@ -275,9 +275,22 @@ const formData = new FormData(this);
 if (response.ok) {
               showToast(result.message, "success");
               
-              // Show voting results after successful vote
-              setTimeout(async () => {
-                await showVotingResults();
+              // Show success message after voting (no results for regular voters)
+              setTimeout(() => {
+                // Clear form and hide voting interface
+                document.getElementById('voteForm').style.display = 'none';
+                
+                const container = document.getElementById("candidatesContainer");
+                container.innerHTML = `
+                  <div class="text-center py-20">
+                    <i class="fa-solid fa-check-circle text-6xl text-green-500 mb-6"></i>
+                    <h1 class="text-3xl font-bold mb-4">Vote Cast Successfully!</h1>
+                    <p class="text-zinc-400 mb-8">Thank you for participating in the election.</p>
+                    <button onclick="location.reload()" class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors">
+                      Back to Voting
+                    </button>
+                  </div>
+                `;
               }, 2000);
             } else {
               showToast(result.message, "error");

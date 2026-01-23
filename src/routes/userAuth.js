@@ -1,6 +1,7 @@
 const { login, register } = require("../controllers/clientAuth");
 const { vote } = require("../controllers/votingController");
 const { addCandidate, getCandidatesByPosition, getResults } = require("../controllers/candidateController");
+const { requireAdminSession } = require("../../middleware/adminAuth");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
@@ -10,7 +11,8 @@ router.post("/register", register);
 router.post("/vote", vote);
 router.post("/add-candidate", addCandidate); // New route for adding candidates
 router.get("/candidates", getCandidatesByPosition); // New route for fetching candidates
-router.get("/results", getResults); // New route for voting results
+// Protected results route (admin only)
+router.get("/results", requireAdminSession, getResults);
 
 // Route to fetch user information
 router.get("/user-info", async (req, res) => {

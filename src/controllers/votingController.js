@@ -10,15 +10,15 @@ exports.vote = async (req, res) => {
   try {
     // Check for user authentication (session or JWT)
     let userId;
-    
+
     // First check session
     if (req.session && req.session.userId) {
       userId = req.session.userId;
-    } 
+    }
     // Then check JWT from Authorization header
     else if (req.headers.authorization) {
-      const token = req.headers.authorization.split(' ')[1];
-      const jwt = require('jsonwebtoken');
+      const token = req.headers.authorization.split(" ")[1];
+      const jwt = require("jsonwebtoken");
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         userId = decoded.userId;
@@ -34,11 +34,12 @@ exports.vote = async (req, res) => {
     }
 
     console.log("User ID:", userId);
-    
+
     // Extract all selected candidates from the dynamic form
     const selectedCandidates = {};
-    Object.keys(req.body).forEach(key => {
-      if (key !== 'userId') { // Exclude userId from candidates
+    Object.keys(req.body).forEach((key) => {
+      if (key !== "userId") {
+        // Exclude userId from candidates
         selectedCandidates[key] = req.body[key];
       }
     });
@@ -58,8 +59,7 @@ exports.vote = async (req, res) => {
     }
     if (user.hasVoted) {
       return res.status(400).json({
-        message:
-          "We Mzee unataka kuiba kura, Kasongo wewe 😂😂😂😂 you've voted already",
+        message: "You cannot Vote twice! Your vote has already been recorded.",
       });
     }
 
@@ -67,7 +67,9 @@ exports.vote = async (req, res) => {
     for (const [position, candidateId] of Object.entries(selectedCandidates)) {
       const candidate = await Candidate.findById(candidateId);
       if (!candidate) {
-        return res.status(404).json({ message: `Candidate not found for position: ${position}` });
+        return res
+          .status(404)
+          .json({ message: `Candidate not found for position: ${position}` });
       }
       candidate.votes += 1;
       await candidate.save();
