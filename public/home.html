@@ -1,121 +1,388 @@
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/notifications.css">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-    }
-  </style>
-</head>
-<body class="bg-gray-100">
-  <div class="container mx-auto p-4">
-    <h1 class="text-4xl font-bold text-center mb-8 text-blue-600">
-      Vote for Your Leader
-    </h1>
-    <form id="voteForm" action="/vote" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
-      <div id="welcomeMessage" class="text-center mb-8 text-lg text-gray-700"></div>
-      
-      <!-- Chairperson Section -->
-      <div class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4 text-gray-800">
-          Chairperson
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50">
-            <input class="mr-2" id="president4" name="candidateId" type="radio" value="67aa0c5fd23ee4cc0c6b1b11"/>
-            <label class="flex items-center w-full cursor-pointer" for="president4">
-              <img alt="Image of Candidate 4 for President" class="w-16 h-16 rounded-full mr-4" src="photos/dan.jpg"/>
-              <span class="text-gray-700 text-lg">Daniel Mwaura</span>
-            </label>
-          </div>
-          <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50">
-            <input class="mr-2" id="president5" name="candidateId" type="radio" value="67aa0c6dd23ee4cc0c6b1b13"/>
-            <label class="flex items-center w-full cursor-pointer" for="president5">
-              <img alt="Image of Candidate 5 for President" class="w-16 h-16 rounded-full mr-4" src="photos/gorge.jpg"/>
-              <span class="text-gray-700 text-lg">Gorge Ireri</span>
-            </label>
-          </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vote | Leadership Portal</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Using a more modern font stack -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/notifications.css" />
+
+    <style>
+      :root {
+        --bg-color: #09090b;
+        --card-bg: rgba(24, 24, 27, 0.6);
+        --border-color: rgba(255, 255, 255, 0.08);
+        --text-primary: #f4f4f5;
+        --text-secondary: #a1a1aa;
+        --accent-blue: #3b82f6;
+        --accent-emerald: #10b981;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        background-color: var(--bg-color);
+        /* Matching login page gradient overlay for brand consistency */
+        background-image: radial-gradient(
+          circle at top right,
+          rgba(15, 23, 42, 0.4) 0%,
+          transparent 50%
+        );
+        color: var(--text-primary);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Animation Hooks */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(16px);
+        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .stagger-1 {
+        animation-delay: 0.1s;
+      }
+      .stagger-2 {
+        animation-delay: 0.2s;
+      }
+      .stagger-3 {
+        animation-delay: 0.3s;
+      }
+
+      /* Custom Candidate Card */
+      .candidate-card {
+        position: relative;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .candidate-card:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(39, 39, 42, 0.8);
+        transform: translateY(-2px);
+      }
+
+      /* Hidden original radio but functional */
+      input[type="radio"].hidden-radio {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* Selection Indicator */
+      input[type="radio"]:checked + .card-content {
+        background: rgba(59, 130, 246, 0.05);
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 1px var(--accent-blue);
+      }
+
+      input[type="radio"]:checked + .card-content .check-indicator {
+        background: var(--accent-blue);
+        border-color: var(--accent-blue);
+      }
+
+      .check-indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--border-color);
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .check-indicator i {
+        font-size: 10px;
+        color: white;
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.2s ease;
+      }
+
+      input[type="radio"]:checked + .card-content .check-indicator i {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* Glass Container */
+      .form-wrapper {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(18, 18, 18, 0.4);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Primary Submit Button */
+      .btn-primary {
+        background: #f4f4f5;
+        color: #09090b;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-primary:hover {
+        background: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      /* Custom Toast Overrides */
+      .toaster {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header Section -->
+      <header class="text-center mb-12 fade-up stagger-1">
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+          Decision <span class="text-zinc-500">2026</span>
+        </h1>
+        <div
+          id="welcomeMessage"
+          class="text-sm md:text-base text-zinc-400 font-medium bg-zinc-900/50 inline-block px-4 py-2 rounded-full border border-white/5"
+        >
+          <!-- Welcome text injected via JS -->
         </div>
-      </div>
+      </header>
 
-      <!-- Vice Chairperson Section -->
-      <div class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4 text-gray-800">
-          Vice Chairperson
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50">
-            <input class="mr-2" id="vicePresident4" name="viceCandidateId" type="radio" value="67aa0c7fd23ee4cc0c6b1b15"/>
-            <label class="flex items-center w-full cursor-pointer" for="vicePresident4">
-              <img alt="Image of Candidate 4 for Vice President" class="w-16 h-16 rounded-full mr-4" src="photos/peter Njiru.jpg"/>
-              <span class="text-gray-700 text-lg">Peter Nyaga Njiru</span>
-            </label>
-          </div>
-          <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50">
-            <input class="mr-2" id="vicePresident5" name="viceCandidateId" type="radio" value="67aa0c8dd23ee4cc0c6b1b17"/>
-            <label class="flex items-center w-full cursor-pointer" for="vicePresident5">
-              <img alt="Image of Candidate 5 for Vice President" class="w-16 h-16 rounded-full mr-4" src="photos/jesse.jpg"/>
-              <span class="text-gray-700 text-lg">Jesse Brian</span>
-            </label>
-          </div>
+      <form
+        id="voteForm"
+        action="/vote"
+        method="POST"
+        class="form-wrapper rounded-3xl p-6 md:p-10 fade-up stagger-2"
+      >
+<!-- Dynamic Candidates Sections -->
+        <div id="candidatesContainer">
+          <!-- Candidates will be dynamically loaded here -->
         </div>
-      </div>
 
-      <input type="hidden" name="userId" id="userId" value="">
-      <div class="text-center">
-        <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600" type="submit">
-          Submit Vote
-        </button>
-      </div>
-      <h3 class="text-center mt-4 text-gray-600">
-        By Codecine Creations (Reach Out to Our Developer Ritchie Brian 0114088623 or visit
-        <a class="text-blue-500" href="https://codecinecreations.co.ke">codecinecreations.co.ke</a>)
-      </h3>
-    </form>
-  </div>
-  <div class="toaster" id="toaster"></div>
+        <!-- Logic Preservation -->
+        <input type="hidden" name="userId" id="userId" value="" />
 
-  <script src="js/notifications.js"></script>
-  <script>
-    document.getElementById('voteForm').addEventListener('submit', async function(event) {
-      event.preventDefault();
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
+        <div class="flex flex-col items-center pt-6 border-t border-white/5">
+          <button
+            class="btn-primary px-10 py-4 rounded-2xl w-full sm:w-auto"
+            type="submit"
+          >
+            Cast My Vote Securely
+          </button>
 
-      try {
-        const response = await fetch('/vote', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+          <p
+            class="mt-8 text-[11px] text-zinc-500 uppercase tracking-[0.2em] text-center max-w-sm leading-relaxed"
+          >
+            Engineered by
+            <a
+              class="text-zinc-300 hover:text-white transition-colors"
+              href="https://codecinecreations.co.ke"
+              >Codecine Creations</a
+            >
+            &bull; Developer Ritchie Brian
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <div class="toaster" id="toaster"></div>
+
+    <!-- Scripts -->
+    <script src="js/notifications.js"></script>
+    <script>
+      // Submission Logic: EXACTLY same as original
+      document
+        .getElementById("voteForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          // Visual feedback for click
+          const btn = event.submitter;
+          const originalText = btn.innerHTML;
+          btn.innerHTML =
+            '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Processing...';
+          btn.disabled = true;
+
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+
+try {
+            // Get token from local storage
+            const token = localStorage.getItem('userToken');
+            const headers = { "Content-Type": "application/json" };
+            
+            if (token) {
+              headers["Authorization"] = `Bearer ${token}`;
+            }
+            
+            const response = await fetch("/vote", {
+              method: "POST",
+              headers: headers,
+              body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+              showToast(result.message, "success");
+            } else {
+              showToast(result.message, "error");
+            }
+          } catch (error) {
+            showToast("Connection error. Please try again.", "error");
+          } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }
         });
 
-        const result = await response.json();
-        if (response.ok) {
-          showToast(result.message, 'success');
-        } else {
-          showToast(result.message, 'error');
-        }
-      } catch (error) {
-        showToast('An error occurred', 'error');
-      }
-    });
+// Function to render candidates dynamically
+      async function renderCandidates() {
+        try {
+          console.log('Fetching candidates...');
+          const response = await fetch("/candidates");
+          console.log('Response status:', response.status);
+          const groupedCandidates = await response.json();
+          console.log('Received candidates:', groupedCandidates);
+          
+          const container = document.getElementById("candidatesContainer");
+          container.innerHTML = '';
+          console.log('Container cleared');
 
-    // Fetch user information and display welcome message
-    fetch('/user-info')
-      .then(response => response.json())
-      .then(data => {
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        welcomeMessage.innerHTML = `Welcome, ${data.name}, Make a wise decision to make CHK great Again`;
-        document.getElementById('userId').value = data.userId;
-      })
-      .catch(error => console.error('Error fetching user info:', error));
-  </script>
-</body>
+          if (Object.keys(groupedCandidates).length === 0) {
+            container.innerHTML = '<p class="text-center text-zinc-500">No candidates available.</p>';
+            return;
+          }
+
+          const positionColors = {
+            'Chairperson': 'bg-blue-500',
+            'Vice Chairperson': 'bg-emerald-500',
+            'Secretary': 'bg-purple-500',
+            'Treasurer': 'bg-orange-500',
+            'default': 'bg-zinc-500'
+          };
+
+          console.log('Positions to render:', Object.keys(groupedCandidates));
+
+          Object.keys(groupedCandidates).forEach((position, index) => {
+            const colorClass = positionColors[position] || positionColors.default;
+            const candidates = groupedCandidates[position];
+
+            console.log(`Rendering ${position} with ${candidates.length} candidates`);
+
+            const section = document.createElement('section');
+            section.className = 'mb-12';
+            section.innerHTML = `
+              <div class="flex items-center gap-3 mb-6">
+                <div class="h-6 w-1 ${colorClass} rounded-full"></div>
+                <h2 class="text-xl font-semibold">${position}</h2>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                ${candidates.map((candidate, candidateIndex) => `
+                  <label class="candidate-card group">
+                    <input
+                      class="hidden-radio"
+                      id="${position.replace(/\s+/g, '-').toLowerCase()}-${candidateIndex}"
+                      name="${position.replace(/\s+/g, '-').toLowerCase()}"
+                      type="radio"
+                      value="${candidate._id}"
+                      ${index === 0 ? 'required' : ''}
+                    />
+                    <div class="card-content flex items-center p-5 border border-transparent rounded-[15px] h-full transition-all">
+                      <img
+                        alt="${candidate.name}"
+                        class="w-14 h-14 rounded-full mr-4 border-2 border-zinc-800 object-cover grayscale group-hover:grayscale-0 transition-all"
+                        src="https://ui-avatars.com/api/?name=${encodeURIComponent(candidate.name)}&background=333&color=fff"
+                        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(candidate.name)}&background=333&color=fff'"
+                      />
+                      <div class="flex-1">
+                        <span class="block text-zinc-100 font-medium text-lg leading-tight">${candidate.name}</span>
+                        <span class="text-zinc-500 text-xs uppercase tracking-widest">Candidate</span>
+                      </div>
+                      <div class="check-indicator">
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                    </div>
+                  </label>
+                `).join('')}
+              </div>
+            `;
+            container.appendChild(section);
+          });
+          console.log('Rendering completed');
+
+        } catch (error) {
+          showToast("Failed to load candidates.", "error");
+          console.error('Error loading candidates:', error);
+        }
+      }
+
+      // Fetch user info and candidates on page load
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Check local storage first
+          const userData = localStorage.getItem('userData');
+          const userToken = localStorage.getItem('userToken');
+          
+          if (userData && userToken) {
+            // Use data from local storage
+            const user = JSON.parse(userData);
+            document.getElementById("welcomeMessage").innerText = `Welcome, ${user.name}`;
+            document.getElementById("userId").value = user.id;
+          } else {
+            // Fallback to session-based user info
+            const userResponse = await fetch("/user-info");
+            const userResult = await userResponse.json();
+
+            if (userResponse.ok) {
+              document.getElementById("welcomeMessage").innerText = `Welcome, ${userResult.name}`;
+              document.getElementById("userId").value = userResult.userId;
+            } else {
+              showToast("User not logged in. Redirecting to login...", "error");
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 2000);
+              return;
+            }
+          }
+
+          // Fetch and render candidates
+          await renderCandidates();
+
+        } catch (error) {
+          showToast("Connection error. Please try again.", "error");
+        }
+      });
+    </script>
+  </body>
 </html>

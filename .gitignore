@@ -1,0 +1,49 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment / secrets
+.env
+.env.*
+# keep an example in repo if needed (create .env.example)
+
+# Logs & runtime files
+logs/
+*.log
+*.log.*
+pids/
+*.pid
+*.pid.lock
+
+# Build / coverage
+dist/
+build/
+coverage/
+.nyc_output/
+
+# IDE / editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Certificates / keys
+*.pem
+*.key
+*.crt
+
+# Sensitive exports / local data dumps
+election.users.json
+election.users.csv
+
+# Optional local runtime files
+.env.local
+.local/

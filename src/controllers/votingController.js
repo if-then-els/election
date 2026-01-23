@@ -16,11 +16,18 @@ exports.vote = async (req, res) => {
         .json({ message: "Unauthorized: user not logged in" });
     }
 
-    const { candidateId, viceCandidateId } = req.body;
     const userId = req.session.userId;
+    
+    // Extract all selected candidates from the dynamic form
+    const selectedCandidates = {};
+    Object.keys(req.body).forEach(key => {
+      if (key !== 'userId') { // Exclude userId from candidates
+        selectedCandidates[key] = req.body[key];
+      }
+    });
+
     console.log("User ID from session:", userId);
-    console.log("Candidate ID from request:", candidateId);
-    console.log("Vice Candidate ID from request:", viceCandidateId);
+    console.log("Selected candidates:", selectedCandidates);
 
     // Validate that userId is a valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -39,25 +46,19 @@ exports.vote = async (req, res) => {
       });
     }
 
+    // Update vote counts for all selected candidates
+    for (const [position, candidateId] of Object.entries(selectedCandidates)) {
+      const candidate = await Candidate.findById(candidateId);
+      if (!candidate) {
+        return res.status(404).json({ message: `Candidate not found for position: ${position}` });
+      }
+      candidate.votes += 1;
+      await candidate.save();
+    }
+
     // Update user's voting status
     user.hasVoted = true;
     await user.save();
-
-    // Update chairperson candidate's vote count
-    const candidate = await Candidate.findById(candidateId);
-    if (!candidate) {
-      return res.status(404).json({ message: "Candidate not found" });
-    }
-    candidate.votes += 1;
-    await candidate.save();
-
-    // Update vice chairperson candidate's vote count
-    const viceCandidate = await Candidate.findById(viceCandidateId);
-    if (!viceCandidate) {
-      return res.status(404).json({ message: "Vice Candidate not found" });
-    }
-    viceCandidate.votes += 1;
-    await viceCandidate.save();
 
     res.status(200).json({ message: "Vote submitted successfully" });
   } catch (error) {

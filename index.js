@@ -13,10 +13,11 @@ dotenv.config();
 
 // Log environment variables for debugging (remove this in production)
 console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
-console.log("mongoConnect:", process.env.mongoConnect);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+console.log("localconnect:", process.env.localconnect);
 
 // Check if required environment variables are set
-if (!process.env.SESSION_SECRET || !process.env.mongoConnect) {
+if (!process.env.SESSION_SECRET || !process.env.JWT_SECRET || !process.env.localconnect) {
   console.error("Missing required environment variables.");
   process.exit(1);
 }
@@ -28,7 +29,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: process.env.mongoConnect,
+      mongoUrl: process.env.localconnect,
     }),
     cookie: {
       secure: process.env.NODE_ENV === "production", // Secure cookies in production
@@ -41,7 +42,7 @@ app.use(
 
 //db mongoose connect
 mongoose
-  .connect(process.env.mongoConnect, {})
+  .connect(process.env.localconnect, {})
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Database connection error:", err));
 
