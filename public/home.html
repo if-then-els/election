@@ -234,10 +234,29 @@
             '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Processing...';
           btn.disabled = true;
 
-          const formData = new FormData(this);
+const formData = new FormData(this);
           const data = Object.fromEntries(formData.entries());
+          
+          // Validate that all positions have been selected
+          const requiredPositions = ['chairperson', 'vice-chairperson'];
+          const selectedPositions = Object.keys(data).filter(key => key !== 'userId');
+          
+          console.log('Form data:', data);
+          console.log('Selected positions:', selectedPositions);
+          
+          // Check if all required positions are selected
+          const missingPositions = requiredPositions.filter(pos => 
+            !selectedPositions.some(selected => selected.toLowerCase().includes(pos))
+          );
+          
+          if (missingPositions.length > 0) {
+            showToast(`Please select candidates for: ${missingPositions.join(', ')}`, "error");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            return;
+          }
 
-try {
+          try {
             // Get token from local storage
             const token = localStorage.getItem('userToken');
             const headers = { "Content-Type": "application/json" };
@@ -253,8 +272,13 @@ try {
             });
 
             const result = await response.json();
-            if (response.ok) {
+if (response.ok) {
               showToast(result.message, "success");
+              
+              // Show voting results after successful vote
+              setTimeout(async () => {
+                await showVotingResults();
+              }, 2000);
             } else {
               showToast(result.message, "error");
             }
@@ -344,6 +368,70 @@ try {
         } catch (error) {
           showToast("Failed to load candidates.", "error");
           console.error('Error loading candidates:', error);
+        }
+      }
+
+      // Function to show voting results
+      async function showVotingResults() {
+        try {
+          const response = await fetch("/results");
+          const results = await response.json();
+          
+          const container = document.getElementById("candidatesContainer");
+          container.innerHTML = `
+            <div class="text-center mb-12">
+              <h1 class="text-3xl font-bold mb-4">Voting Results</h1>
+              <p class="text-zinc-400">Thank you for voting!</p>
+            </div>
+          `;
+
+          const positionColors = {
+            'Chairperson': 'bg-blue-500',
+            'Vice Chairperson': 'bg-emerald-500',
+            'Secretary': 'bg-purple-500',
+            'Treasurer': 'bg-orange-500',
+            'default': 'bg-zinc-500'
+          };
+
+          Object.keys(results).forEach((position) => {
+            const colorClass = positionColors[position] || positionColors.default;
+            const candidates = results[position];
+
+            const section = document.createElement('section');
+            section.className = 'mb-12';
+            section.innerHTML = `
+              <div class="flex items-center gap-3 mb-6">
+                <div class="h-6 w-1 ${colorClass} rounded-full"></div>
+                <h2 class="text-xl font-semibold">${position}</h2>
+              </div>
+              <div class="space-y-4">
+                ${candidates.map((candidate, index) => `
+                  <div class="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+                    <div class="flex items-center gap-4">
+                      <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-lg font-bold ${index === 0 ? 'text-green-500' : 'text-zinc-400'}">
+                        ${index + 1}
+                      </div>
+                      <img
+                        alt="${candidate.name}"
+                        class="w-10 h-10 rounded-full border-2 border-zinc-800 object-cover"
+                        src="https://ui-avatars.com/api/?name=${encodeURIComponent(candidate.name)}&background=333&color=fff"
+                      />
+                      <span class="text-zinc-100 font-medium">${candidate.name}</span>
+                    </div>
+                    <div class="text-right">
+                      <div class="text-2xl font-bold ${index === 0 ? 'text-green-500' : 'text-zinc-400'}">${candidate.votes}</div>
+                      <div class="text-xs text-zinc-500 uppercase tracking-widest">votes</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            `;
+            container.appendChild(section);
+          });
+
+        } catch (error) {
+          console.error('Error loading results:', error);
+          showToast("Failed to load voting results.", "error");
         }
       }
 
