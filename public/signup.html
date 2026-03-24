@@ -206,11 +206,11 @@
 
       <form action="/register" method="POST">
         <!-- Name attributes preserved for backend -->
-        <input type="text" name="name" placeholder="Full Staff Name" required />
+        <input type="text" name="name" placeholder="Full Name" required />
         <input
-          type="email"
-          name="email"
-          placeholder="Official Email Address"
+          type="tel"
+          name="phoneNumber"
+          placeholder="Phone Number"
           required
         />
 
@@ -287,15 +287,20 @@
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json"
               },
               body: JSON.stringify(data),
             });
 
             const result = await response.json();
-            if (response.ok) {
+
+            if (response.ok && result.success) {
               showToast(result.message, "success");
+              setTimeout(() => {
+                window.location.href = "/yet.html";
+              }, 2000);
             } else {
-              showToast(result.message, "error");
+              showToast(result.message || "Registration failed", "error");
             }
           } catch (error) {
             showToast("A connection error occurred", "error");

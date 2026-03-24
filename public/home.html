@@ -185,7 +185,7 @@
         method="POST"
         class="form-wrapper rounded-3xl p-6 md:p-10 fade-up stagger-2"
       >
-<!-- Dynamic Candidates Sections -->
+        <!-- Dynamic Candidates Sections -->
         <div id="candidatesContainer">
           <!-- Candidates will be dynamically loaded here -->
         </div>
@@ -201,7 +201,7 @@
             Cast My Vote Securely
           </button>
 
-          <p
+          <!-- <p
             class="mt-8 text-[11px] text-zinc-500 uppercase tracking-[0.2em] text-center max-w-sm leading-relaxed"
           >
             Engineered by
@@ -211,7 +211,7 @@
               >Codecine Creations</a
             >
             &bull; Developer Ritchie Brian
-          </p>
+          </p> -->
         </div>
       </form>
     </div>
@@ -234,23 +234,16 @@
             '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Processing...';
           btn.disabled = true;
 
-const formData = new FormData(this);
+          const formData = new FormData(this);
           const data = Object.fromEntries(formData.entries());
-          
-          // Validate that all positions have been selected
-          const requiredPositions = ['chairperson', 'vice-chairperson'];
-          const selectedPositions = Object.keys(data).filter(key => key !== 'userId');
-          
-          console.log('Form data:', data);
-          console.log('Selected positions:', selectedPositions);
-          
-          // Check if all required positions are selected
-          const missingPositions = requiredPositions.filter(pos => 
-            !selectedPositions.some(selected => selected.toLowerCase().includes(pos))
+
+          // Check if at least one candidate is selected
+          const selectedCandidates = Object.keys(data).filter(
+            (key) => key !== "userId",
           );
-          
-          if (missingPositions.length > 0) {
-            showToast(`Please select candidates for: ${missingPositions.join(', ')}`, "error");
+
+          if (selectedCandidates.length === 0) {
+            showToast("Please select at least one candidate", "error");
             btn.innerHTML = originalText;
             btn.disabled = false;
             return;
@@ -258,29 +251,31 @@ const formData = new FormData(this);
 
           try {
             // Get token from local storage
-            const token = localStorage.getItem('userToken');
+            const token = localStorage.getItem("userToken");
             const headers = { "Content-Type": "application/json" };
-            
+
             if (token) {
               headers["Authorization"] = `Bearer ${token}`;
             }
-            
-            const response = await fetch("/vote", {
+
+            const response = await fetch("/voting/cast-vote", {
               method: "POST",
               headers: headers,
               body: JSON.stringify(data),
             });
 
             const result = await response.json();
-if (response.ok) {
+            if (response.ok) {
               showToast(result.message, "success");
-              
+
               // Show success message after voting (no results for regular voters)
               setTimeout(() => {
                 // Clear form and hide voting interface
-                document.getElementById('voteForm').style.display = 'none';
-                
-                const container = document.getElementById("candidatesContainer");
+                document.getElementById("voteForm").style.display = "none";
+
+                const container = document.getElementById(
+                  "candidatesContainer",
+                );
                 container.innerHTML = `
                   <div class="text-center py-20">
                     <i class="fa-solid fa-check-circle text-6xl text-green-500 mb-6"></i>
@@ -303,57 +298,63 @@ if (response.ok) {
           }
         });
 
-// Function to render candidates dynamically
+      // Function to render candidates dynamically
       async function renderCandidates() {
         try {
-          console.log('Fetching candidates...');
+          console.log("Fetching candidates...");
           const response = await fetch("/candidates");
-          console.log('Response status:', response.status);
+          console.log("Response status:", response.status);
           const groupedCandidates = await response.json();
-          console.log('Received candidates:', groupedCandidates);
-          
+          console.log("Received candidates:", groupedCandidates);
+
           const container = document.getElementById("candidatesContainer");
-          container.innerHTML = '';
-          console.log('Container cleared');
+          container.innerHTML = "";
+          console.log("Container cleared");
 
           if (Object.keys(groupedCandidates).length === 0) {
-            container.innerHTML = '<p class="text-center text-zinc-500">No candidates available.</p>';
+            container.innerHTML =
+              '<p class="text-center text-zinc-500">No candidates available.</p>';
             return;
           }
 
           const positionColors = {
-            'Chairperson': 'bg-blue-500',
-            'Vice Chairperson': 'bg-emerald-500',
-            'Secretary': 'bg-purple-500',
-            'Treasurer': 'bg-orange-500',
-            'default': 'bg-zinc-500'
+            Chairperson: "bg-blue-500",
+            "Vice Chairperson": "bg-emerald-500",
+            Secretary: "bg-purple-500",
+            Treasurer: "bg-orange-500",
+            default: "bg-zinc-500",
           };
 
-          console.log('Positions to render:', Object.keys(groupedCandidates));
+          console.log("Positions to render:", Object.keys(groupedCandidates));
 
           Object.keys(groupedCandidates).forEach((position, index) => {
-            const colorClass = positionColors[position] || positionColors.default;
+            const colorClass =
+              positionColors[position] || positionColors.default;
             const candidates = groupedCandidates[position];
 
-            console.log(`Rendering ${position} with ${candidates.length} candidates`);
+            console.log(
+              `Rendering ${position} with ${candidates.length} candidates`,
+            );
 
-            const section = document.createElement('section');
-            section.className = 'mb-12';
+            const section = document.createElement("section");
+            section.className = "mb-12";
             section.innerHTML = `
               <div class="flex items-center gap-3 mb-6">
                 <div class="h-6 w-1 ${colorClass} rounded-full"></div>
                 <h2 class="text-xl font-semibold">${position}</h2>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                ${candidates.map((candidate, candidateIndex) => `
+                ${candidates
+                  .map(
+                    (candidate, candidateIndex) => `
                   <label class="candidate-card group">
                     <input
                       class="hidden-radio"
-                      id="${position.replace(/\s+/g, '-').toLowerCase()}-${candidateIndex}"
-                      name="${position.replace(/\s+/g, '-').toLowerCase()}"
+                      id="${position.replace(/\s+/g, "-").toLowerCase()}-${candidateIndex}"
+                      name="${position.replace(/\s+/g, "-").toLowerCase()}"
                       type="radio"
                       value="${candidate._id}"
-                      ${index === 0 ? 'required' : ''}
+                      ${index === 0 ? "required" : ""}
                     />
                     <div class="card-content flex items-center p-5 border border-transparent rounded-[15px] h-full transition-all">
                       <img
@@ -371,16 +372,17 @@ if (response.ok) {
                       </div>
                     </div>
                   </label>
-                `).join('')}
+                `,
+                  )
+                  .join("")}
               </div>
             `;
             container.appendChild(section);
           });
-          console.log('Rendering completed');
-
+          console.log("Rendering completed");
         } catch (error) {
           showToast("Failed to load candidates.", "error");
-          console.error('Error loading candidates:', error);
+          console.error("Error loading candidates:", error);
         }
       }
 
@@ -389,7 +391,7 @@ if (response.ok) {
         try {
           const response = await fetch("/results");
           const results = await response.json();
-          
+
           const container = document.getElementById("candidatesContainer");
           container.innerHTML = `
             <div class="text-center mb-12">
@@ -399,29 +401,32 @@ if (response.ok) {
           `;
 
           const positionColors = {
-            'Chairperson': 'bg-blue-500',
-            'Vice Chairperson': 'bg-emerald-500',
-            'Secretary': 'bg-purple-500',
-            'Treasurer': 'bg-orange-500',
-            'default': 'bg-zinc-500'
+            Chairperson: "bg-blue-500",
+            "Vice Chairperson": "bg-emerald-500",
+            Secretary: "bg-purple-500",
+            Treasurer: "bg-orange-500",
+            default: "bg-zinc-500",
           };
 
           Object.keys(results).forEach((position) => {
-            const colorClass = positionColors[position] || positionColors.default;
+            const colorClass =
+              positionColors[position] || positionColors.default;
             const candidates = results[position];
 
-            const section = document.createElement('section');
-            section.className = 'mb-12';
+            const section = document.createElement("section");
+            section.className = "mb-12";
             section.innerHTML = `
               <div class="flex items-center gap-3 mb-6">
                 <div class="h-6 w-1 ${colorClass} rounded-full"></div>
                 <h2 class="text-xl font-semibold">${position}</h2>
               </div>
               <div class="space-y-4">
-                ${candidates.map((candidate, index) => `
+                ${candidates
+                  .map(
+                    (candidate, index) => `
                   <div class="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
                     <div class="flex items-center gap-4">
-                      <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-lg font-bold ${index === 0 ? 'text-green-500' : 'text-zinc-400'}">
+                      <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-lg font-bold ${index === 0 ? "text-green-500" : "text-zinc-400"}">
                         ${index + 1}
                       </div>
                       <img
@@ -432,18 +437,19 @@ if (response.ok) {
                       <span class="text-zinc-100 font-medium">${candidate.name}</span>
                     </div>
                     <div class="text-right">
-                      <div class="text-2xl font-bold ${index === 0 ? 'text-green-500' : 'text-zinc-400'}">${candidate.votes}</div>
+                      <div class="text-2xl font-bold ${index === 0 ? "text-green-500" : "text-zinc-400"}">${candidate.votes}</div>
                       <div class="text-xs text-zinc-500 uppercase tracking-widest">votes</div>
                     </div>
                   </div>
-                `).join('')}
+                `,
+                  )
+                  .join("")}
               </div>
             `;
             container.appendChild(section);
           });
-
         } catch (error) {
-          console.error('Error loading results:', error);
+          console.error("Error loading results:", error);
           showToast("Failed to load voting results.", "error");
         }
       }
@@ -452,13 +458,14 @@ if (response.ok) {
       document.addEventListener("DOMContentLoaded", async () => {
         try {
           // Check local storage first
-          const userData = localStorage.getItem('userData');
-          const userToken = localStorage.getItem('userToken');
-          
+          const userData = localStorage.getItem("userData");
+          const userToken = localStorage.getItem("userToken");
+
           if (userData && userToken) {
             // Use data from local storage
             const user = JSON.parse(userData);
-            document.getElementById("welcomeMessage").innerText = `Welcome, ${user.name}`;
+            document.getElementById("welcomeMessage").innerText =
+              `Welcome, ${user.name}`;
             document.getElementById("userId").value = user.id;
           } else {
             // Fallback to session-based user info
@@ -466,7 +473,8 @@ if (response.ok) {
             const userResult = await userResponse.json();
 
             if (userResponse.ok) {
-              document.getElementById("welcomeMessage").innerText = `Welcome, ${userResult.name}`;
+              document.getElementById("welcomeMessage").innerText =
+                `Welcome, ${userResult.name}`;
               document.getElementById("userId").value = userResult.userId;
             } else {
               showToast("User not logged in. Redirecting to login...", "error");
@@ -479,7 +487,6 @@ if (response.ok) {
 
           // Fetch and render candidates
           await renderCandidates();
-
         } catch (error) {
           showToast("Connection error. Please try again.", "error");
         }

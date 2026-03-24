@@ -1,33 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voting Information</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        p {
-            padding: 20px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <h1>Voting Information</h1>
-    <p>Voting will begin on the 12th. Please make sure to participate and make your voice heard!</p>
 
-    <h1>Make CHK Great Again</h1>
-</body>
+    <!-- Google Fonts: Inter for premium SaaS typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome for Icons -->
+    <script
+      src="https://kit.fontawesome.com/4b611f40c0.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config for Strict Color Palette & Fonts -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              slate: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+            boxShadow: {
+              premium: "0 10px 40px -10px rgba(0, 0, 0, 0.08)",
+              "premium-hover": "0 20px 40px -10px rgba(0, 0, 0, 0.12)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth state transitions */
+      .js-animate {
+        transition:
+          opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-slate-200 min-h-screen flex items-center justify-center p-4 sm:p-6 overflow-hidden relative"
+  >
+    <!-- Subtle Background Elements for depth -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-slate-200/40 blur-3xl"
+      ></div>
+      <div
+        class="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-slate-200/40 blur-3xl"
+      ></div>
+    </div>
+
+    <!-- Main Card Container -->
+    <div
+      class="w-full max-w-lg relative z-10 js-animate opacity-0 translate-y-8"
+      id="main-card"
+    >
+      <div
+        class="bg-white rounded-3xl shadow-premium border border-slate-100 overflow-hidden transition-shadow duration-500 hover:shadow-premium-hover relative"
+      >
+        <!-- Top Accent Line -->
+        <div class="absolute top-0 left-0 w-full h-1.5 bg-slate-900"></div>
+
+        <div class="p-8 sm:p-12">
+          <!-- Header Icon -->
+          <div
+            class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center mb-8 shadow-sm group hover:bg-slate-900 transition-colors duration-300"
+          >
+            <i
+              class="fa-solid fa-check-to-slot text-slate-700 text-xl group-hover:text-white transition-colors duration-300"
+            ></i>
+          </div>
+
+          <!-- Main Content -->
+          <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+            Voting Information
+          </h1>
+
+          <p class="text-slate-500 leading-relaxed text-[15px] mb-8">
+            Voting will begin
+            <span class="font-semibold text-slate-900">Soon</span>. Please make
+            sure to participate and make your voice heard! Every vote shapes the
+            future of our hospital.
+          </p>
+
+          <!-- Divider -->
+          <div class="w-full h-px bg-slate-100 mb-8"></div>
+
+          <!-- Callout Block (Stylized "Make CHK Great Again") -->
+          <div
+            class="bg-slate-900 text-white p-6 rounded-2xl text-center shadow-md relative overflow-hidden group cursor-default hover:-translate-y-1 transition-transform duration-300"
+          >
+            <!-- Subtle shine effect inside the dark box -->
+            <div
+              class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+
+            <h1
+              class="text-lg font-semibold tracking-wide flex items-center justify-center gap-3"
+            >
+              <i class="fa-solid fa-star text-slate-400 text-sm"></i>
+              Make CHK Great Again
+              <i class="fa-solid fa-star text-slate-400 text-sm"></i>
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Link (Optional quick-return to dashboard) -->
+      <div class="mt-8 text-center"></div>
+    </div>
+
+    <!-- Entrance Animation Trigger -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Slight delay for smooth load-in effect
+        setTimeout(() => {
+          const card = document.getElementById("main-card");
+          card.classList.remove("opacity-0", "translate-y-8");
+          card.classList.add("opacity-100", "translate-y-0");
+        }, 100);
+      });
+    </script>
+  </body>
 </html>

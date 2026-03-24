@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <!-- Preserved jsPDF library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <style>
@@ -33,7 +32,6 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      /* Glassmorphism Surface */
       .glass-panel {
         background: rgba(24, 24, 27, 0.6);
         backdrop-filter: blur(12px);
@@ -42,7 +40,6 @@
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       }
 
-      /* Motion System */
       .animate-stagger > * {
         opacity: 0;
         transform: translateY(10px);
@@ -56,551 +53,623 @@
         }
       }
 
-      .stagger-1 {
-        animation-delay: 0.1s;
-      }
-      .stagger-2 {
-        animation-delay: 0.2s;
-      }
-      .stagger-3 {
-        animation-delay: 0.3s;
-      }
+      .stagger-1 { animation-delay: 0.1s; }
+      .stagger-2 { animation-delay: 0.2s; }
+      .stagger-3 { animation-delay: 0.3s; }
 
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 6px;
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: var(--zinc-800); border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--zinc-700); }
+
+      tr { transition: background-color 0.2s ease; }
+      tr:hover { background-color: rgba(255, 255, 255, 0.02); }
+
+      .btn-action { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+      .btn-action:hover { transform: scale(1.02); }
+      .btn-action:active { transform: scale(0.98); }
+
+      .toggle-switch {
+        position: relative;
+        width: 52px;
+        height: 28px;
+        background: #3f3f46;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: background 0.3s;
       }
-      ::-webkit-scrollbar-track {
-        background: transparent;
+      .toggle-switch.active { background: #10b981; }
+      .toggle-switch::after {
+        content: '';
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: white;
+        border-radius: 50%;
+        top: 3px;
+        left: 3px;
+        transition: transform 0.3s;
       }
-      ::-webkit-scrollbar-thumb {
-        background: var(--zinc-800);
+      .toggle-switch.active::after { transform: translateX(24px); }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: #71717a;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .nav-item:hover { color: #fafafa; background: rgba(255,255,255,0.05); }
+      .nav-item.active { color: #fafafa; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
+
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
         border-radius: 10px;
+        background: rgba(24, 24, 27, 0.95);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fafafa;
+        font-size: 14px;
+        z-index: 1000;
+        animation: toastIn 0.3s ease;
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--zinc-700);
-      }
+      .toast.success { border-color: #10b981; }
+      .toast.error { border-color: #ef4444; }
 
-      /* Premium Table Styles */
-      tr {
-        transition: background-color 0.2s ease;
-      }
-      tr:hover {
-        background-color: rgba(255, 255, 255, 0.02);
-      }
-
-      /* Interactive States */
-      .btn-action {
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .btn-action:hover {
-        transform: scale(1.02);
-      }
-      .btn-action:active {
-        transform: scale(0.98);
+      @keyframes toastIn {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
       }
     </style>
   </head>
   <body class="min-h-screen flex flex-col selection:bg-blue-500/30">
+    <div id="toast" style="display:none;"></div>
+
     <div class="flex-1 flex flex-col md:flex-row">
-      <!-- Sidebar Navigation (Responsive) -->
-      <aside
-        class="w-full md:w-64 border-r border-white/5 bg-zinc-900/50 p-6 flex flex-col gap-8"
-      >
+      <!-- Sidebar -->
+      <aside class="w-full md:w-64 border-r border-white/5 bg-zinc-900/50 p-6 flex flex-col gap-6">
         <div class="flex items-center gap-3 px-2">
-          <div
-            class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-900/20"
-          >
+          <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <i class="fa-solid fa-shield-halved text-white text-sm"></i>
           </div>
-          <span class="font-bold tracking-tight text-lg"
-            >Admin<span class="text-zinc-500">Center</span></span
-          >
+          <span class="font-bold tracking-tight text-lg">Admin<span class="text-zinc-500">Center</span></span>
         </div>
 
         <nav class="flex-1">
-          <ul class="space-y-2">
-            <li>
-              <a
-                href="#"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/5 text-white font-medium border border-white/5"
-              >
-                <i class="fa-solid fa-chart-pie text-blue-400"></i> Dashboard
-              </a>
+          <ul class="space-y-1">
+            <li class="nav-item active" data-section="dashboard">
+              <i class="fa-solid fa-chart-pie text-blue-400"></i> Dashboard
             </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
-              >
-                <i class="fa-solid fa-users"></i> Voters
-              </a>
+            <li class="nav-item" data-section="voters">
+              <i class="fa-solid fa-users"></i> Voters
             </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
-              >
-                <i class="fa-solid fa-gear"></i> Settings
-              </a>
+            <li class="nav-item" data-section="candidates">
+              <i class="fa-solid fa-user-tie"></i> Candidates
+            </li>
+            <li class="nav-item" data-section="settings">
+              <i class="fa-solid fa-gear"></i> Election Settings
             </li>
           </ul>
         </nav>
 
-        <div class="border-t border-white/5 pt-6">
-          <a
-            href="#"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:text-red-400 transition-all"
-          >
+        <div class="border-t border-white/5 pt-4">
+          <div class="nav-item text-red-400" id="logoutBtn">
             <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-          </a>
+          </div>
         </div>
       </aside>
 
-      <!-- Main Content Area -->
+      <!-- Main Content -->
       <main class="flex-1 flex flex-col bg-zinc-950">
-        <!-- Header Section -->
-        <header
-          class="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate-stagger stagger-1"
-        >
+        <!-- Header -->
+        <header class="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
-              Overview
-            </h1>
-            <p class="text-zinc-500 text-sm mt-1">
-              Live metrics and voter management console.
-            </p>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight" id="pageTitle">Dashboard</h1>
+            <p class="text-zinc-500 text-sm mt-1" id="pageSubtitle">Live metrics and election overview</p>
           </div>
           <div class="flex items-center gap-3">
-            <!-- ID 'downloadPdf' preserved for original JS logic -->
-            <button
-              id="downloadPdf"
-              class="btn-action bg-white text-black px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center gap-2 shadow-xl shadow-white/5"
-            >
+            <button id="downloadPdf" class="btn-action bg-white text-black px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center gap-2">
               <i class="fa-solid fa-file-pdf"></i> Export PDF
             </button>
           </div>
         </header>
 
-        <section
-          class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 animate-stagger stagger-2"
-        >
-          <!-- Registered Voters Card -->
-          <div
-            class="lg:col-span-8 glass-panel rounded-2xl overflow-hidden flex flex-col"
-          >
-            <div
-              class="p-6 border-b border-white/5 flex justify-between items-center"
-            >
-              <h2 class="font-semibold text-zinc-100 flex items-center gap-2">
-                <i class="fa-solid fa-id-card text-blue-500"></i> Registered
-                Voters
-              </h2>
-              <span
-                class="text-[10px] uppercase tracking-widest text-zinc-500 bg-zinc-800/50 px-2 py-1 rounded"
-                >Live Data</span
-              >
+        <!-- Dashboard Section -->
+        <section id="dashboardSection" class="p-6 md:p-8 space-y-6">
+          <!-- Status Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-panel rounded-xl p-5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-zinc-400 text-sm">Total Voters</p>
+                  <p class="text-3xl font-bold text-white mt-1" id="totalVoters">0</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-users text-blue-400 text-xl"></i>
+                </div>
+              </div>
             </div>
-            <div class="overflow-x-auto flex-1">
-              <table class="min-w-full">
-                <thead>
-                  <tr
-                    class="text-left text-[11px] uppercase tracking-wider text-zinc-500 border-b border-white/5"
-                  >
-<th class="py-4 px-6 font-medium">Rank</th>
-                    <th class="py-4 px-6 font-medium">Full Name</th>
-                    <th class="py-4 px-6 font-medium">Identity / Email</th>
-                    <th class="py-4 px-6 font-medium">Voting Status</th>
-                    <th class="py-4 px-6 font-medium text-right">Control</th>
-                  </tr>
-                </thead>
-                <!-- ID 'voters' preserved for original JS logic -->
-                <tbody id="voters" class="divide-y divide-white/5">
-                  <!-- Dynamic content injected via JS -->
-                </tbody>
-              </table>
+            <div class="glass-panel rounded-xl p-5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-zinc-400 text-sm">Voted</p>
+                  <p class="text-3xl font-bold text-white mt-1" id="votedCount">0</p>
+                </div>
+                <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-check-circle text-green-400 text-xl"></i>
+                </div>
+              </div>
+            </div>
+            <div class="glass-panel rounded-xl p-5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-zinc-400 text-sm">Not Voted</p>
+                  <p class="text-3xl font-bold text-white mt-1" id="notVotedCount">0</p>
+                </div>
+                <div class="w-12 h-12 bg-yellow-500/10 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-clock text-yellow-400 text-xl"></i>
+                </div>
+              </div>
+            </div>
+            <div class="glass-panel rounded-xl p-5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-zinc-400 text-sm">Voting Status</p>
+                  <p class="text-lg font-bold mt-1" id="votingStatusText">-</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-bolt text-purple-400 text-xl"></i>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Votes Results Card -->
-          <div
-            class="lg:col-span-4 glass-panel rounded-2xl overflow-hidden flex flex-col"
-          >
+          <!-- Election Results -->
+          <div class="glass-panel rounded-2xl overflow-hidden">
+            <div class="p-6 border-b border-white/5 flex justify-between items-center">
+              <h2 class="font-semibold text-zinc-100 flex items-center gap-2">
+                <i class="fa-solid fa-square-poll-vertical text-emerald-500"></i> Live Election Results
+              </h2>
+              <button onclick="fetchResults()" class="text-zinc-500 hover:text-white">
+                <i class="fa-solid fa-rotate"></i>
+              </button>
+            </div>
+            <div class="p-6" id="resultsContainer">
+              <p class="text-zinc-500 text-center py-8">No results yet</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Voters Section -->
+        <section id="votersSection" class="p-6 md:p-8 hidden">
+          <div class="glass-panel rounded-2xl overflow-hidden">
             <div class="p-6 border-b border-white/5">
               <h2 class="font-semibold text-zinc-100 flex items-center gap-2">
-                <i
-                  class="fa-solid fa-square-poll-vertical text-emerald-500"
-                ></i>
-                Election Tally
+                <i class="fa-solid fa-users text-blue-400"></i> Registered Voters
               </h2>
             </div>
-            <div class="p-2 flex-1">
+            <div class="overflow-x-auto">
               <table class="min-w-full">
                 <thead>
-                  <tr
-                    class="text-left text-[11px] uppercase tracking-wider text-zinc-500"
-                  >
-                    <th class="py-3 px-4 font-medium">Candidate</th>
-                    <th class="py-3 px-4 font-medium text-right">Weight</th>
-                  </tr>
-                </thead>
-                <!-- ID 'votes' preserved for original JS logic -->
-                <tbody id="votes" class="text-sm">
-                  <!-- Dynamic content injected via JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Candidate Management Card -->
-          <div
-            class="lg:col-span-12 glass-panel rounded-2xl overflow-hidden flex flex-col"
-          >
-            <div
-              class="p-6 border-b border-white/5 flex justify-between items-center"
-            >
-              <h2 class="font-semibold text-zinc-100 flex items-center gap-2">
-                <i class="fa-solid fa-user-tie text-purple-500"></i> Candidate
-                Management
-              </h2>
-              <div class="flex items-center gap-2">
-                <button
-                  id="addCandidateBtn"
-                  class="btn-action bg-purple-500 text-white px-4 py-2 rounded-xl font-semibold text-sm flex items-center gap-2 shadow-xl"
-                >
-                  <i class="fa-solid fa-plus"></i> Add Candidate
-                </button>
-                <span
-                  class="text-[10px] uppercase tracking-widest text-zinc-500 bg-zinc-800/50 px-2 py-1 rounded"
-                  >Admin Control</span
-                >
-              </div>
-            </div>
-            <!-- Voting Statistics -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" id="votingStats">
-                <div class="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="text-blue-400 text-sm">Total Voters</p>
-                      <p class="text-2xl font-bold text-white" id="totalVoters">0</p>
-                    </div>
-                    <i class="fa-solid fa-users text-blue-500 text-xl"></i>
-                  </div>
-                </div>
-                <div class="bg-green-500/5 border border-green-500/20 rounded-lg p-4">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="text-green-400 text-sm">Voted</p>
-                      <p class="text-2xl font-bold text-white" id="votedCount">0</p>
-                    </div>
-                    <i class="fa-solid fa-check-circle text-green-500 text-xl"></i>
-                  </div>
-                </div>
-                <div class="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="text-yellow-400 text-sm">Not Voted</p>
-                      <p class="text-2xl font-bold text-white" id="notVotedCount">0</p>
-                    </div>
-                    <i class="fa-solid fa-clock text-yellow-500 text-xl"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="overflow-x-auto flex-1">
-              <table class="min-w-full">
-                <thead>
-                  <tr
-                    class="text-left text-[11px] uppercase tracking-wider text-zinc-500 border-b border-white/5"
-                  >
-                    <th class="py-4 px-6 font-medium">Candidate Name</th>
-                    <th class="py-4 px-6 font-medium">Position</th>
-                    <th class="py-4 px-6 font-medium">Votes Received</th>
+                  <tr class="text-left text-[11px] uppercase tracking-wider text-zinc-500 border-b border-white/5">
+                    <th class="py-4 px-6 font-medium">#</th>
+                    <th class="py-4 px-6 font-medium">Full Name</th>
+                    <th class="py-4 px-6 font-medium">Phone</th>
+                    <th class="py-4 px-6 font-medium">Status</th>
+                    <th class="py-4 px-6 font-medium">Registered</th>
                     <th class="py-4 px-6 font-medium text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody id="candidates" class="divide-y divide-white/5">
-                  <!-- Dynamic content injected via JS -->
-                </tbody>
+                <tbody id="votersTable" class="divide-y divide-white/5"></tbody>
               </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Candidates Section -->
+        <section id="candidatesSection" class="p-6 md:p-8 hidden">
+          <div class="glass-panel rounded-2xl overflow-hidden">
+            <div class="p-6 border-b border-white/5 flex justify-between items-center">
+              <h2 class="font-semibold text-zinc-100 flex items-center gap-2">
+                <i class="fa-solid fa-user-tie text-purple-400"></i> Candidate Management
+              </h2>
+              <button onclick="showAddCandidateModal()" class="btn-action bg-purple-500 text-white px-4 py-2 rounded-xl font-semibold text-sm flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Add Candidate
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full">
+                <thead>
+                  <tr class="text-left text-[11px] uppercase tracking-wider text-zinc-500 border-b border-white/5">
+                    <th class="py-4 px-6 font-medium">Name</th>
+                    <th class="py-4 px-6 font-medium">Position</th>
+                    <th class="py-4 px-6 font-medium">Votes</th>
+                    <th class="py-4 px-6 font-medium text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="candidatesTable" class="divide-y divide-white/5"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settingsSection" class="p-6 md:p-8 hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Voting Controls -->
+            <div class="glass-panel rounded-2xl p-6">
+              <h2 class="font-semibold text-zinc-100 flex items-center gap-2 mb-6">
+                <i class="fa-solid fa-bolt text-yellow-400"></i> Voting Controls
+              </h2>
+              
+              <div class="space-y-6">
+                <div class="flex items-center justify-between p-4 bg-zinc-800/50 rounded-xl">
+                  <div>
+                    <p class="font-medium text-white">Enable Voting</p>
+                    <p class="text-sm text-zinc-500">Allow voters to cast their votes</p>
+                  </div>
+                  <div class="toggle-switch" id="votingToggle" onclick="toggleVoting()"></div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-zinc-800/50 rounded-xl">
+                  <div>
+                    <p class="font-medium text-white">Enable Registration</p>
+                    <p class="text-sm text-zinc-500">Allow new voters to register</p>
+                  </div>
+                  <div class="toggle-switch" id="registrationToggle" onclick="toggleRegistration()"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule Controls -->
+            <div class="glass-panel rounded-2xl p-6">
+              <h2 class="font-semibold text-zinc-100 flex items-center gap-2 mb-6">
+                <i class="fa-solid fa-calendar text-blue-400"></i> Schedule Controls
+              </h2>
+              
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm text-zinc-400 mb-2">Voting Start Date & Time</label>
+                  <input type="datetime-local" id="startDate" class="w-full bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                  <label class="block text-sm text-zinc-400 mb-2">Voting End Date & Time</label>
+                  <input type="datetime-local" id="endDate" class="w-full bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500">
+                </div>
+                <button onclick="saveSchedule()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors">
+                  <i class="fa-solid fa-save mr-2"></i> Save Schedule
+                </button>
+              </div>
+            </div>
+
+            <!-- Reset Controls -->
+            <div class="glass-panel rounded-2xl p-6 lg:col-span-2">
+              <h2 class="font-semibold text-zinc-100 flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-triangle-exclamation text-red-400"></i> Danger Zone
+              </h2>
+              <div class="flex flex-wrap gap-4">
+                <button onclick="resetVotes()" class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white px-4 py-2 rounded-xl font-semibold text-sm transition-colors">
+                  <i class="fa-solid fa-arrow-rotate-left mr-2"></i> Reset All Votes
+                </button>
+                <button onclick="clearVoters()" class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white px-4 py-2 rounded-xl font-semibold text-sm transition-colors">
+                  <i class="fa-solid fa-users-slash mr-2"></i> Clear All Voters
+                </button>
+                <button onclick="clearCandidates()" class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white px-4 py-2 rounded-xl font-semibold text-sm transition-colors">
+                  <i class="fa-solid fa-user-xmark mr-2"></i> Clear All Candidates
+                </button>
+              </div>
             </div>
           </div>
         </section>
       </main>
     </div>
 
-    <!-- Footer: Clean & Minimal -->
+    <!-- Add Candidate Modal -->
+    <div id="candidateModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+      <div class="glass-panel rounded-2xl p-6 w-full max-w-md mx-4">
+        <h3 class="text-xl font-bold text-white mb-4">Add New Candidate</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm text-zinc-400 mb-2">Candidate Name</label>
+            <input type="text" id="candidateName" class="w-full bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500" placeholder="Enter name">
+          </div>
+          <div>
+            <label class="block text-sm text-zinc-400 mb-2">Position</label>
+            <input type="text" id="candidatePosition" class="w-full bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500" placeholder="e.g., President">
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button onclick="hideCandidateModal()" class="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-xl font-semibold">Cancel</button>
+            <button onclick="addCandidate()" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-semibold">Add Candidate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="border-t border-white/5 p-6 bg-zinc-950 text-center">
-      <p class="text-xs text-zinc-600 uppercase tracking-widest">
-        &copy; 2024 Portal Management &bull; Built with Precision
-      </p>
+      <p class="text-xs text-zinc-600 uppercase tracking-widest">&copy; 2024 Election Portal</p>
     </footer>
 
-    <!-- LOGIC: 100% PRESERVED FROM ORIGINAL -->
     <script>
-      let fetchedData = {};
+      let settings = {};
+      let voters = [];
+      let candidates = [];
+
+      function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type}`;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 3000);
+      }
+
+      function switchSection(section) {
+        document.querySelectorAll('[id$="Section"]').forEach(s => s.classList.add('hidden'));
+        document.getElementById(section + 'Section').classList.remove('hidden');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`[data-section="${section}"]`)?.classList.add('active');
+        
+        const titles = { dashboard: ['Dashboard', 'Live metrics and election overview'], voters: ['Voters', 'Manage registered voters'], candidates: ['Candidates', 'Manage election candidates'], settings: ['Settings', 'Control election parameters'] };
+        document.getElementById('pageTitle').textContent = titles[section][0];
+        document.getElementById('pageSubtitle').textContent = titles[section][1];
+      }
+
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => switchSection(item.dataset.section));
+      });
+
+      async function fetchSettings() {
+        try {
+          const res = await fetch('/admin/settings');
+          settings = await res.json();
+          updateSettingsUI();
+        } catch (err) { console.error(err); }
+      }
+
+      function updateSettingsUI() {
+        document.getElementById('votingToggle').classList.toggle('active', settings.votingEnabled);
+        document.getElementById('registrationToggle').classList.toggle('active', settings.registrationEnabled);
+        
+        if (settings.votingStartDate) document.getElementById('startDate').value = new Date(settings.votingStartDate).toISOString().slice(0, 16);
+        if (settings.votingEndDate) document.getElementById('endDate').value = new Date(settings.votingEndDate).toISOString().slice(0, 16);
+        
+        updateVotingStatusText();
+      }
+
+      function updateVotingStatusText() {
+        const statusEl = document.getElementById('votingStatusText');
+        if (!settings.votingEnabled) {
+          statusEl.textContent = 'Disabled';
+          statusEl.className = 'text-lg font-bold mt-1 text-red-400';
+        } else {
+          const now = new Date();
+          if (settings.votingStartDate && now < new Date(settings.votingStartDate)) {
+            statusEl.textContent = 'Scheduled';
+            statusEl.className = 'text-lg font-bold mt-1 text-yellow-400';
+          } else if (settings.votingEndDate && now > new Date(settings.votingEndDate)) {
+            statusEl.textContent = 'Ended';
+            statusEl.className = 'text-lg font-bold mt-1 text-zinc-400';
+          } else {
+            statusEl.textContent = 'Active';
+            statusEl.className = 'text-lg font-bold mt-1 text-green-400';
+          }
+        }
+      }
+
+      async function toggleVoting() {
+        settings.votingEnabled = !settings.votingEnabled;
+        await saveSettings();
+      }
+
+      async function toggleRegistration() {
+        settings.registrationEnabled = !settings.registrationEnabled;
+        await saveSettings();
+      }
+
+      async function saveSchedule() {
+        settings.votingStartDate = document.getElementById('startDate').value || null;
+        settings.votingEndDate = document.getElementById('endDate').value || null;
+        await saveSettings();
+        showToast('Schedule saved successfully');
+      }
+
+      async function saveSettings() {
+        try {
+          const res = await fetch('/admin/settings', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settings)
+          });
+          if (res.ok) showToast('Settings updated');
+          updateSettingsUI();
+        } catch (err) { showToast('Error saving settings', 'error'); }
+      }
+
+      async function fetchVoters() {
+        try {
+          const res = await fetch('/admin/realtime-data');
+          const data = await res.json();
+          voters = data.voters;
+          candidates = data.votes;
+          
+          document.getElementById('totalVoters').textContent = voters.length;
+          document.getElementById('votedCount').textContent = voters.filter(v => v.hasVoted).length;
+          document.getElementById('notVotedCount').textContent = voters.length - voters.filter(v => v.hasVoted).length;
+          
+          renderVotersTable();
+          renderCandidatesTable();
+        } catch (err) { console.error(err); }
+      }
+
+      function renderVotersTable() {
+        const tbody = document.getElementById('votersTable');
+        tbody.innerHTML = voters.map((v, i) => `
+          <tr class="hover:bg-white/5">
+            <td class="py-4 px-6 text-zinc-400">${i + 1}</td>
+            <td class="py-4 px-6 text-white font-medium">${v.name} ${v.role === 'admin' ? '<span class="ml-2 text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">ADMIN</span>' : ''}</td>
+            <td class="py-4 px-6 text-zinc-400">${v.phoneNumber}</td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 rounded-full text-sm ${v.hasVoted ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}">
+                ${v.hasVoted ? 'Voted' : 'Not Voted'}
+              </span>
+            </td>
+            <td class="py-4 px-6 text-zinc-500 text-sm">${new Date(v.createdAt).toLocaleDateString()}</td>
+            <td class="py-4 px-6 text-right">
+              ${v.role !== 'admin' ? `<button onclick="deleteVoter('${v._id}')" class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white p-2 rounded-lg transition-colors"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function renderCandidatesTable() {
+        const tbody = document.getElementById('candidatesTable');
+        tbody.innerHTML = candidates.map(c => `
+          <tr class="hover:bg-white/5">
+            <td class="py-4 px-6 text-white font-medium">${c.name}</td>
+            <td class="py-4 px-6 text-zinc-400">${c.position}</td>
+            <td class="py-4 px-6"><span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full font-bold">${c.votes}</span></td>
+            <td class="py-4 px-6 text-right">
+              <button onclick="deleteCandidate('${c._id}')" class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white p-2 rounded-lg transition-colors"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      }
 
       async function fetchResults() {
         try {
-          const response = await fetch("/admin/results");
-          const results = await response.json();
+          const res = await fetch('/admin/results');
+          const data = await res.json();
+          const container = document.getElementById('resultsContainer');
           
-          const resultsContainer = document.getElementById("votes");
-          resultsContainer.innerHTML = "";
+          if (Object.keys(data).length === 0) {
+            container.innerHTML = '<p class="text-zinc-500 text-center py-8">No results yet</p>';
+            return;
+          }
           
-          Object.keys(results).forEach((position) => {
-            const candidates = results[position].sort((a, b) => b.votes - a.votes);
-            
-            const section = document.createElement("tr");
-            section.className = "bg-white/2 border-b border-white/5";
-            section.innerHTML = `
-              <td class="py-3 px-4 font-semibold text-zinc-200" colspan="2">
-                <i class="fa-solid fa-trophy text-yellow-500 mr-2"></i>${position}
-              </td>
-              <td class="py-3 px-4" colspan="2"></td>
-            `;
-            resultsContainer.appendChild(section);
-            
-            candidates.forEach((candidate, index) => {
-              const tr = document.createElement("tr");
-              tr.className = "hover:bg-white/5 border-b border-white/5";
-              tr.innerHTML = `
-                <td class="py-3 px-4 text-zinc-300">
-                  ${index === 0 ? '👑' : index === 1 ? '🥈' : index === 2 ? '🥉' : ''} ${candidate.name}
-                </td>
-                <td class="py-3 px-4 text-right">
-                  <span class="bg-${index === 0 ? 'green' : 'blue'}-500/10 text-${index === 0 ? 'green' : 'blue'}-400 px-3 py-1 rounded-full font-bold text-sm">
-                    ${candidate.votes} votes
-                  </span>
-                </td>
-                <td class="py-3 px-4 text-right">
-                  ${candidate.votes > 0 ? ((candidate.votes / candidates.reduce((sum, c) => sum + c.votes, 0)) * 100).toFixed(1) + '%' : '0%'}
-                </td>
-                <td class="py-3 px-4"></td>
-              `;
-              resultsContainer.appendChild(tr);
-            });
-          });
-        } catch (error) {
-          console.error("Error fetching results:", error);
-          // Fallback to existing realtime data
-        }
+          container.innerHTML = Object.entries(data).map(([position, candidates]) => `
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-trophy text-yellow-500"></i> ${position}
+              </h3>
+              <div class="space-y-2">
+                ${candidates.sort((a,b) => b.votes - a.votes).map((c, i) => `
+                  <div class="flex items-center justify-between p-3 bg-zinc-800/50 rounded-xl">
+                    <div class="flex items-center gap-3">
+                      <span class="w-8 h-8 flex items-center justify-center rounded-full ${i === 0 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-zinc-700 text-zinc-400'} font-bold text-sm">${i + 1}</span>
+                      <span class="text-white">${c.name}</span>
+                    </div>
+                    <span class="font-bold ${i === 0 ? 'text-green-400' : 'text-zinc-400'}">${c.votes} votes</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('');
+        } catch (err) { console.error(err); }
       }
 
-      function updateVoterStats() {
-        if (!fetchedData.voters) return;
-
-        const totalVoters = fetchedData.voters.length;
-        const votedCount = fetchedData.voters.filter(v => v.hasVoted).length;
-        const notVotedCount = totalVoters - votedCount;
-
-        document.getElementById("totalVoters").textContent = totalVoters;
-        document.getElementById("votedCount").textContent = votedCount;
-        document.getElementById("notVotedCount").textContent = notVotedCount;
+      function showAddCandidateModal() {
+        document.getElementById('candidateModal').classList.remove('hidden');
+        document.getElementById('candidateModal').classList.add('flex');
       }
 
-      async function fetchCandidates() {
+      function hideCandidateModal() {
+        document.getElementById('candidateModal').classList.add('hidden');
+        document.getElementById('candidateModal').classList.remove('flex');
+        document.getElementById('candidateName').value = '';
+        document.getElementById('candidatePosition').value = '';
+      }
+
+      async function addCandidate() {
+        const name = document.getElementById('candidateName').value.trim();
+        const position = document.getElementById('candidatePosition').value.trim();
+        if (!name || !position) { showToast('Please fill all fields', 'error'); return; }
+        
         try {
-          const response = await fetch("/admin/candidates");
-          const data = await response.json();
-          const candidatesList = document.getElementById("candidates");
-          candidatesList.innerHTML = "";
-
-          data.candidates.forEach((candidate) => {
-            const tr = document.createElement("tr");
-            tr.className = "hover:bg-white/5";
-            tr.innerHTML = `
-                      <td class="py-4 px-6 font-medium text-zinc-200">${candidate.name}</td>
-                      <td class="py-4 px-6 text-zinc-400">${candidate.position}</td>
-                      <td class="py-4 px-6">
-                          <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full font-bold text-sm">
-                              ${candidate.votes} votes
-                          </span>
-                      </td>
-                      <td class="py-4 px-6 text-right">
-                          <button class="btn-action bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-lg delete-candidate-btn transition-colors" data-id="${candidate._id}">
-                              <i class="fa-solid fa-trash-can pointer-events-none"></i>
-                          </button>
-                      </td>`;
-            candidatesList.appendChild(tr);
+          const res = await fetch('/admin/candidates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, position })
           });
-        } catch (error) {
-          console.error("Error fetching candidates:", error);
-        }
+          if (res.ok) {
+            showToast('Candidate added');
+            hideCandidateModal();
+            fetchVoters();
+            fetchResults();
+          } else {
+            showToast('Error adding candidate', 'error');
+          }
+        } catch (err) { showToast('Error', 'error'); }
       }
 
-      async function fetchRealTimeData() {
+      async function deleteCandidate(id) {
+        if (!confirm('Delete this candidate?')) return;
         try {
-          const response = await fetch("/admin/realtime-data");
-          const data = await response.json();
-          fetchedData = data;
-          updateVoterStats();
-          const votersList = document.getElementById("voters");
-          const votesList = document.getElementById("votes");
-
-          votersList.innerHTML = "";
-          votesList.innerHTML = "";
-
-data.voters
-            .forEach((voter, index) => {
-              const tr = document.createElement("tr");
-              tr.className = "hover:bg-white/5";
-              const votedStatus = voter.hasVoted;
-              tr.innerHTML = `
-                        <td class="py-4 px-6 font-medium text-zinc-200">${index + 1}</td>
-                        <td class="py-4 px-6">
-                          <div class="flex items-center gap-2">
-                            <span class="text-zinc-200">${voter.name}</span>
-                            ${voter.role === 'admin' ? '<span class="bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full text-xs font-medium">ADMIN</span>' : ''}
-                          </div>
-                        </td>
-                        <td class="py-4 px-6 text-zinc-400 text-sm">${voter.email}</td>
-                        <td class="py-4 px-6">
-                          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
-                            votedStatus 
-                              ? 'bg-green-500/10 text-green-400' 
-                              : 'bg-yellow-500/10 text-yellow-400'
-                          }">
-                            <i class="fa-solid fa-${votedStatus ? 'check-circle' : 'clock'} text-xs"></i>
-                            ${votedStatus ? 'Voted' : 'Not Voted'}
-                          </span>
-                        </td>
-                        <td class="py-4 px-6 text-right">
-                            <button class="btn-action bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-lg delete-btn transition-colors" data-id="${voter._id}">
-                                <i class="fa-solid fa-trash-can pointer-events-none"></i>
-                            </button>
-                        </td>`;
-votersList.appendChild(tr);
-            });
-
-          // Update statistics after rendering voters
-          updateVoterStats();
-
-          data.votes.forEach((vote) => {
-            const tr = document.createElement("tr");
-            tr.className =
-              "hover:bg-white/5 border-b border-white/5 last:border-0";
-            tr.innerHTML = `
-                        <td class="py-3 px-4 text-zinc-300">${vote.name}</td>
-                        <td class="py-3 px-4 text-right">
-                            <span class="bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full font-bold text-xs">
-                                ${vote.votes}
-                            </span>
-                        </td>`;
-            votesList.appendChild(tr);
-          });
-        } catch (error) {
-          console.error("Error fetching real-time data:", error);
-        }
+          await fetch('/admin/candidate', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) });
+          showToast('Candidate deleted');
+          fetchVoters();
+          fetchResults();
+        } catch (err) { showToast('Error', 'error'); }
       }
 
-      // Global Event Listener for Deletion (Preserved)
-      document.addEventListener("click", async function (event) {
-        if (event.target.classList.contains("delete-btn")) {
-          const voterId = event.target.getAttribute("data-id");
-          try {
-            const response = await fetch("/admin/voter", {
-              method: "DELETE",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: voterId }),
-            });
-            const result = await response.json();
-            // Custom non-alert feedback could go here, but kept alert to match original logic precisely
-            alert(result.message);
-            fetchRealTimeData();
-          } catch (error) {
-            console.error("Error deleting voter:", error);
-          }
-        }
+      async function deleteVoter(id) {
+        if (!confirm('Delete this voter?')) return;
+        try {
+          await fetch('/admin/voter', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) });
+          showToast('Voter deleted');
+          fetchVoters();
+        } catch (err) { showToast('Error', 'error'); }
+      }
 
-        if (event.target.classList.contains("delete-candidate-btn")) {
-          const candidateId = event.target.getAttribute("data-id");
-          if (confirm("Are you sure you want to delete this candidate? This action cannot be undone.")) {
-            try {
-              const response = await fetch("/admin/candidate", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: candidateId }),
-              });
-              const result = await response.json();
-              alert(result.message);
-              fetchCandidates();
-              fetchRealTimeData();
-            } catch (error) {
-              console.error("Error deleting candidate:", error);
-            }
-          }
-        }
+      async function resetVotes() {
+        if (!confirm('Reset all votes? This will reset all candidate votes and voter status.')) return;
+        try {
+          const res = await fetch('/admin/reset-votes', { method: 'PUT' });
+          if (res.ok) { showToast('All votes reset'); fetchVoters(); fetchResults(); }
+          else showToast('Error', 'error');
+        } catch (err) { showToast('Error', 'error'); }
+      }
+
+      async function clearVoters() {
+        if (!confirm('Delete ALL voters? Admins will be preserved.')) return;
+        try {
+          const res = await fetch('/admin/voters-all', { method: 'DELETE' });
+          if (res.ok) { showToast('Voters cleared'); fetchVoters(); }
+          else showToast('Error', 'error');
+        } catch (err) { showToast('Error', 'error'); }
+      }
+
+      async function clearCandidates() {
+        if (!confirm('Delete ALL candidates? This cannot be undone.')) return;
+        try {
+          const res = await fetch('/admin/candidates-all', { method: 'DELETE' });
+          if (res.ok) { showToast('Candidates cleared'); fetchVoters(); fetchResults(); }
+          else showToast('Error', 'error');
+        } catch (err) { showToast('Error', 'error'); }
+      }
+
+      document.getElementById('downloadPdf').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text('Registered Voters', 10, 15);
+        voters.forEach((v, i) => doc.text(`${i+1}. ${v.name} - ${v.phoneNumber}`, 10, 25 + (i * 8)));
+        doc.save('voters.pdf');
       });
 
-      // PDF Generation Logic (Preserved)
-      document
-        .getElementById("downloadPdf")
-        .addEventListener("click", function () {
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
-          const pageHeight = doc.internal.pageSize.height;
-          let y = 20;
-
-          doc.setFontSize(18);
-          doc.text("Registered Voters Export", 10, 15);
-          doc.setFontSize(10);
-
-          if (fetchedData.voters) {
-            fetchedData.voters
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .forEach((voter, index) => {
-                if (y > pageHeight - 10) {
-                  doc.addPage();
-                  y = 20;
-                }
-                doc.text(
-                  `${index + 1}. ${voter.name.toUpperCase()} (${voter.email})`,
-                  10,
-                  y,
-                );
-                y += 10;
-              });
-          }
-
-          doc.save("leadership_voter_registry.pdf");
-        });
-
-      // Add Candidate Button Handler
-      document.getElementById("addCandidateBtn").addEventListener("click", function() {
-        const name = prompt("Enter candidate name:");
-        if (name) {
-          const position = prompt("Enter candidate position:");
-          if (position) {
-            addCandidate(name, position);
-          }
-        }
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await fetch('/admin/logout', { method: 'POST' });
+        window.location.href = '/admin-login.html';
       });
 
-      async function addCandidate(name, position) {
-        try {
-          const response = await fetch("/admin/candidates", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, position }),
-          });
-          const result = await response.json();
-          alert(result.message);
-          fetchCandidates();
-          fetchRealTimeData();
-        } catch (error) {
-          console.error("Error adding candidate:", error);
-        }
-      }
-
-      // Polling loop
-      setInterval(() => {
-        fetchRealTimeData();
-        fetchCandidates();
-        fetchResults();
-      }, 5000);
-      fetchRealTimeData();
-      fetchCandidates();
+      fetchSettings();
+      fetchVoters();
+      fetchResults();
+      setInterval(() => { fetchVoters(); fetchResults(); }, 5000);
     </script>
   </body>
 </html>

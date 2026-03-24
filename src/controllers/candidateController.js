@@ -40,24 +40,6 @@ exports.getCandidates = async (req, res) => {
   }
 };
 
-// Controller for getting voting results
-exports.getResults = async (req, res) => {
-  try {
-    const candidates = await Candidate.find().sort({ votes: -1 });
-    const groupedResults = candidates.reduce((acc, candidate) => {
-      if (!acc[candidate.position]) {
-        acc[candidate.position] = [];
-      }
-      acc[candidate.position].push(candidate);
-      return acc;
-    }, {});
-    
-    res.status(200).json(groupedResults);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 // Controller for getting candidates grouped by position
 exports.getCandidatesByPosition = async (req, res) => {
   try {

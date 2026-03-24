@@ -2,90 +2,147 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const User = require("../models/users");
-const bcrypt = require("bcrypt");
+const Settings = require("../models/settings");
 const { generateToken } = require("../../middleware/jwtAuth");
 
-// Login controller
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { phoneNumber, password } = req.body;
     if (!password) {
       return res.status(400).json({ message: "Password not provided" });
     }
-    const user = await User.findOne({ email });
+    const normalizedPhone = phoneNumber.replace(/[\s\-\(\)]/g, "");
+    const user = await User.findOne({ phoneNumber: normalizedPhone });
 
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    const isMatch = password === user.password;
-    if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Check if request wants JSON (API call) or HTML redirect (form submission)
+    if (password !== user.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
     const acceptsJson = req.headers.accept && req.headers.accept.includes('application/json');
     
     if (acceptsJson || req.xhr) {
-      // API call - return JWT token
       const token = generateToken(user._id);
-      res.status(200).json({ 
+      return res.status(200).json({ 
+        success: true,
         message: "Login successful",
         token,
         user: {
-          id: user._id,
+          id: user._id.toString(),
           name: user.name,
-          email: user.email,
-          hasVoted: user.hasVoted
+          phoneNumber: user.phoneNumber,
+          hasVoted: user.hasVoted,
+          role: user.role
         }
       });
     } else {
-      // Form submission - use session and redirect
       req.session.userId = user._id;
-      res.redirect("/home.html");
+      return res.redirect("/home.html");
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Login error:", error);
+    if (!res.headersSent) {
+      return res.status(500).json({ success: false, message: "Server error occurred" });
+    }
   }
 };
 
-// Register controller
 exports.register = async (req, res) => {
   try {
-    const { name, password, email } = req.body;
-
-    // Check if user already exists by name
-    const userExists = await User.findOne({ name, email });
-
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+    const settings = await Settings.getSettings();
+    if (!settings.registrationEnabled) {
+      return res.status(403).json({ message: "Registration is currently closed" });
     }
 
-    const newUser = new User({ name, password, email });
+    const { name, password, phoneNumber } = req.body;
+    
+    if (!name || !password || !phoneNumber) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const normalizedPhone = phoneNumber.replace(/[\s\-\(\)]/g, "");
+
+    if (normalizedPhone.length < 8) {
+      return res.status(400).json({ message: "Invalid phone number" });
+    }
+
+    const userExists = await User.findOne({ phoneNumber: normalizedPhone });
+    if (userExists) {
+      return res.status(400).json({ message: "Phone number already registered" });
+    }
+
+    const newUser = new User({ name, password, phoneNumber: normalizedPhone });
     await newUser.save();
 
-    // Check if request wants JSON (API call) or HTML redirect (form submission)
     const acceptsJson = req.headers.accept && req.headers.accept.includes('application/json');
     
     if (acceptsJson || req.xhr) {
-      // API call - return JWT token
       const token = generateToken(newUser._id);
-      res.status(201).json({ 
-        message: "User registered successfully",
+      return res.status(201).json({ 
+        success: true,
+        message: "Registration successful",
         token,
         user: {
-          id: newUser._id,
+          id: newUser._id.toString(),
           name: newUser.name,
-          email: newUser.email,
+          phoneNumber: newUser.phoneNumber,
           hasVoted: newUser.hasVoted
         }
       });
     } else {
-      // Form submission - use session and redirect
       req.session.userId = newUser._id;
-      res.redirect("/home.html");
+      return res.redirect("/home.html");
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Registration error:", error);
+    if (!res.headersSent) {
+      return res.status(500).json({ success: false, message: "Server error occurred" });
+    }
+  }
+};
+
+exports.registerAdmin = async (req, res) => {
+  try {
+    const { name, password, phoneNumber, secretKey } = req.body;
+    
+    if (!name || !password || !phoneNumber) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (secretKey !== "ADMIN2024") {
+      return res.status(403).json({ message: "Invalid admin secret key" });
+    }
+
+    const normalizedPhone = phoneNumber.replace(/[\s\-\(\)]/g, "");
+
+    const userExists = await User.findOne({ phoneNumber: normalizedPhone });
+    if (userExists) {
+      return res.status(400).json({ message: "Phone number already registered" });
+    }
+
+    const newAdmin = new User({ 
+      name, 
+      password, 
+      phoneNumber: normalizedPhone,
+      role: 'admin' 
+    });
+    await newAdmin.save();
+
+    return res.status(201).json({ 
+      success: true,
+      message: "Admin registered successfully",
+      user: {
+        id: newAdmin._id.toString(),
+        name: newAdmin.name,
+        phoneNumber: newAdmin.phoneNumber,
+        role: newAdmin.role
+      }
+    });
+  } catch (error) {
+    console.error("Admin registration error:", error);
+    return res.status(500).json({ success: false, message: "Server error occurred" });
   }
 };

@@ -18,7 +18,11 @@ console.log("JWT_SECRET:", process.env.JWT_SECRET);
 console.log("localconnect:", process.env.localconnect);
 
 // Check if required environment variables are set
-if (!process.env.SESSION_SECRET || !process.env.JWT_SECRET || !process.env.localconnect) {
+if (
+  !process.env.SESSION_SECRET ||
+  !process.env.JWT_SECRET ||
+  !process.env.localconnect
+) {
   console.error("Missing required environment variables.");
   process.exit(1);
 }
@@ -38,7 +42,7 @@ app.use(
       sameSite: "lax", // Changed from "none" to "lax" for better compatibility
       maxAge: 1000 * 60 * 60,
     },
-  })
+  }),
 );
 
 //db mongoose connect
@@ -57,7 +61,7 @@ app.use(
     credentials: true, // Allow cookies/session
     methods: ["GET", "POST", "PUT", "DELETE"], // Ensure all HTTP methods are allowed
     allowedHeaders: ["Content-Type", "Authorization"], // Ensure correct headers
-  })
+  }),
 );
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -66,8 +70,10 @@ app.use(express.static(path.join(__dirname, "public")));
 const userAuth = require("./src/routes/userAuth");
 const adminRoutes = require("./src/routes/adminRoutes");
 const adminAuth = require("./src/routes/adminAuth");
+const votingRoutes = require("./src/routes/votingRoutes");
 
 app.use("/", userAuth);
+app.use("/voting", votingRoutes);
 app.use("/admin", adminRoutes);
 app.use("/admin", adminAuth);
 
@@ -81,42 +87,50 @@ app.get("/admin-login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "admin-login.html"));
 });
 
+// Serve the admin registration page
+app.get("/admin-register", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "admin-register.html"));
+});
+
 // Debug route to check session
 app.get("/session-debug", (req, res) => {
   res.json({
     session: req.session,
     sessionId: req.sessionID,
-    cookies: req.headers.cookie
+    cookies: req.headers.cookie,
   });
 });
 
 // Protect admin dashboard - check if user is logged in as admin
 app.get("/admin-dashboard", async (req, res) => {
   try {
-    console.log('Dashboard access attempt - Session:', {
+    console.log("Dashboard access attempt - Session:", {
       userId: req.session.userId,
       isAdmin: req.session.isAdmin,
-      sessionId: req.sessionID
+      sessionId: req.sessionID,
     });
-    
+
     if (!req.session.userId) {
-      console.log('No session userId, redirecting to login');
+      console.log("No session userId, redirecting to login");
       return res.redirect("/admin-login");
     }
-    
+
     // Check if user is admin
     const user = await User.findById(req.session.userId);
-    console.log('User found:', user ? { id: user._id, role: user.role } : 'null');
-    
-    if (!user || user.role !== 'admin') {
-      console.log('User not found or not admin, redirecting to login');
+    console.log(
+      "User found:",
+      user ? { id: user._id, role: user.role } : "null",
+    );
+
+    if (!user || user.role !== "admin") {
+      console.log("User not found or not admin, redirecting to login");
       return res.redirect("/admin-login");
     }
-    
-    console.log('Admin verified, serving dashboard');
+
+    console.log("Admin verified, serving dashboard");
     res.sendFile(path.join(__dirname, "public", "admin-dashboard.html"));
   } catch (err) {
-    console.error('Error checking admin status:', err);
+    console.error("Error checking admin status:", err);
     res.redirect("/admin-login");
   }
 });

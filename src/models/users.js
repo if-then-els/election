@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
+    phoneNumber: { type: String, required: true },
     password: { type: String, required: true },
     hasVoted: { type: Boolean, default: false },
     role: { type: String, enum: ['voter', 'admin'], default: 'voter' },
@@ -12,18 +11,11 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// // Hash the password before saving the user model
-// userSchema.pre("save", async function (next) {
-//   if (!this.isModified("password")) {
-//     return next();
-//   }
-//   try {
-//     const salt = await bcrypt.genSalt(10);
-//     this.password = await bcrypt.hash(this.password, salt);
-//     next();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+userSchema.pre("save", function (next) {
+  if (this.phoneNumber) {
+    this.phoneNumber = this.phoneNumber.replace(/[\s\-\(\)]/g, "");
+  }
+  next();
+});
 
 module.exports = mongoose.model("User", userSchema);
